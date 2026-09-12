@@ -1022,7 +1022,7 @@
             };
 
             if (db) {
-                const roomRef = doc(db, 'artifacts', appId, 'rooms', roomCode);
+                const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', roomCode);
                 await setDoc(roomRef, roomData);
             }
 
@@ -1094,7 +1094,7 @@
 
         function listenToRoom(roomCode) {
             if (!db) return;
-            const roomRef = doc(db, 'artifacts', appId, 'rooms', roomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', roomCode);
             unsubscribeRoom = onSnapshot(roomRef, (docSnap) => {
                 if (!docSnap.exists()) return;
                 const state = docSnap.data();
