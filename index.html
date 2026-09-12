@@ -332,7 +332,15 @@
         import { getFirestore, doc, setDoc, getDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'boursone-online-default';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const firebaseConfig = {
+            apiKey: "AIzaSyAluDihyK3K1QFsRnEIZrccpLsQvMZc4",
+            authDomain: "bours-one.firebaseapp.com",
+            projectId: "bours-one",
+            storageBucket: "bours-one.firebasestorage.app",
+            messagingSenderId: "636066075908",
+            appId: "1:636066075908:web:28fe20db8c2e1849152c51",
+            measurementId: "G-S4JKXV8RF7"
+        };
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : undefined;
 
         let app, db, auth;
@@ -342,7 +350,7 @@
         let unsubscribeRoom = null;
         let isSoloMode = false;
         let soloState = null;
-        let pendingAttackCard = null; // Card waiting for opponent target selection
+        let pendingAttackCard = null;
 
         let TARGET_CAPITAL = 250000;
         const VAL_LIVRET = 8000;
@@ -350,7 +358,6 @@
         const VAL_ACTION = 28000;
         const VAL_CRYPTO = 42000;
 
-        // Distinct subtle shade variations for card family color-coding
         const SHADE_LIVRET_1 = 'from-emerald-800 to-emerald-950 border-emerald-500/50 text-emerald-100';
         const SHADE_LIVRET_2 = 'from-teal-800 to-teal-950 border-teal-500/50 text-teal-100';
         const SHADE_LIVRET_3 = 'from-green-800 to-green-950 border-green-500/50 text-green-100';
@@ -568,7 +575,6 @@
                 pTrapSlot.innerHTML = `<span class="text-[10px] text-slate-500 italic">Aucune attaque</span>`;
             }
 
-            // Render Opponents Container with target selection support
             const opponentsContainer = document.getElementById('opponents-container');
             opponentsContainer.innerHTML = '';
             ais.forEach((ai, idx) => {
@@ -615,7 +621,6 @@
 
             renderHand(me.hand, isMyTurn && me.hasDrawnThisTurn && pendingAttackCard === null);
 
-            // Banner for target selection
             const banner = document.getElementById('target-selection-banner');
             if (pendingAttackCard) {
                 banner.classList.remove('hidden');
@@ -959,7 +964,7 @@
                 } else if (card.type === 'trap') {
                     typeBadge = `<span class="text-[7px] bg-red-950/85 px-1.5 py-0.5 rounded font-mono text-red-300 font-bold border border-emerald-500/30">-${card.penaltyPercent}%</span>`;
                 } else {
-                    typeBadge = `<span class="text-[7px] bg-blue-950/85 px-1.5 py-0.5 rounded font-mono text-blue-300 font-bold border border-blue-500/30">Défense</span>`;
+                    typeBadge = `<span class="text-[7px] bg-blue-950/85 px-1.5 py-0.5 rounded font-mono text-blue-300 font-bold border border-emerald-500/30">Défense</span>`;
                 }
 
                 cardEl.innerHTML = `
@@ -981,7 +986,7 @@
             });
         }
 
-        // ONLINE MULTIPLAYER
+        // ONLINE MULTIPLAYER (Corrected Firestore Paths)
         window.hostNewGame = async function() {
             isSoloMode = false;
             const nameInput = document.getElementById('player-name-input').value.trim();
@@ -1049,7 +1054,7 @@
             isHost = false;
 
             if (db) {
-                const roomRef = doc(db, 'artifacts', appId, 'rooms', codeInput);
+                const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', codeInput);
                 const snap = await getDoc(roomRef);
                 if (!snap.exists()) {
                     return;
@@ -1085,7 +1090,7 @@
 
         window.startHostGame = async function() {
             if (!db || !currentRoomCode) return;
-            const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', currentRoomCode);
             await updateDoc(roomRef, { status: 'playing' });
             document.getElementById('waiting-screen').classList.add('hidden');
         }
@@ -1235,7 +1240,7 @@
             }
             me.hasDrawnThisTurn = true;
 
-            const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', currentRoomCode);
             await updateDoc(roomRef, {
                 deck: currentRoomState.deck,
                 discardPile: currentRoomState.discardPile,
@@ -1322,7 +1327,7 @@
                 }
             }
 
-            const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', currentRoomCode);
             await updateDoc(roomRef, {
                 deck: currentRoomState.deck,
                 discardPile: currentRoomState.discardPile,
@@ -1367,7 +1372,7 @@
 
             closeDiscardFromHandModal();
 
-            const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', currentRoomCode);
             await updateDoc(roomRef, {
                 discardPile: currentRoomState.discardPile,
                 players: currentRoomState.players,
