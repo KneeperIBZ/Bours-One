@@ -14,11 +14,13 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl text-center">
+
+    <!-- ÉCRAN D'ACCUEIL -->
+    <div id="home-screen" class="max-w-xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl text-center">
         <h1 class="text-3xl font-bold text-emerald-400 mb-2">Bours'One</h1>
         <p class="text-slate-400 text-sm mb-6">LE JEU DE STRATÉGIE FINANCIÈRE & BOURSIÈRE</p>
         
-        <div id="status-msg" class="text-emerald-500 text-xs mb-4 font-mono">Système initialisé avec succès</div>
+        <div id="status-msg" class="text-emerald-500 text-xs mb-4 font-mono">Système opérationnel - Prêt à jouer</div>
 
         <div class="mb-4 text-left">
             <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wider">Votre Pseudo de Trader :</label>
@@ -41,35 +43,185 @@
             </div>
         </div>
 
-        <button id="start-solo-btn" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 mb-4">
+        <button id="start-solo-btn" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 mb-4 cursor-pointer">
             🤖 Lancer la Partie Solo
         </button>
 
         <div class="grid grid-cols-2 gap-3">
-            <button class="bg-slate-800 hover:bg-slate-700 text-emerald-400 font-semibold py-3 rounded-xl border border-slate-700 text-sm transition-all">
+            <button id="create-room-btn" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 font-semibold py-3 rounded-xl border border-slate-700 text-sm transition-all cursor-pointer">
                 🏠 Créer Salon en Ligne
             </button>
-            <button class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold py-3 rounded-xl border border-slate-700 text-sm transition-all">
+            <button id="join-room-btn" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold py-3 rounded-xl border border-slate-700 text-sm transition-all cursor-pointer">
                 🚪 Rejoindre Salon
             </button>
         </div>
+    </div>
 
-        <div class="mt-6 pt-4 border-t border-slate-800/80 text-left text-[11px] text-slate-400">
-            <p class="font-semibold text-slate-300 mb-1">CARACTÉRISTIQUES PRO :</p>
-            <p>5 cartes en main • Pioche obligatoire au début • Ciblez n'importe quel adversaire pour vos attaques • Boucliers permanents & Plafond -35% inflation.</p>
+    <!-- PLATEAU DE JEU (Caché par défaut) -->
+    <div id="game-screen" class="hidden max-w-4xl w-full bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
+        <div class="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+            <div>
+                <h2 id="game-title" class="text-xl font-bold text-emerald-400">Partie en cours</h2>
+                <p id="game-turn-info" class="text-xs text-slate-400">Tour de : Vous</p>
+            </div>
+            <button id="quit-game-btn" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs px-3 py-2 rounded-lg border border-red-500/30 transition-all">
+                Quitter la partie
+            </button>
+        </div>
+
+        <!-- Zone des Adversaires -->
+        <div id="opponents-container" class="grid grid-cols-3 gap-3 mb-6">
+            <!-- Généré dynamiquement -->
+        </div>
+
+        <!-- Centre du jeu (Pioche / Action) -->
+        <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 mb-6 text-center">
+            <div id="log-box" class="text-sm text-emerald-400 font-mono mb-4 h-12 flex items-center justify-center">
+                Piochez une carte pour démarrer votre tour !
+            </div>
+            <div class="flex justify-center gap-4">
+                <button id="draw-card-btn" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-6 py-3 rounded-xl text-sm transition-all shadow-md">
+                    🎴 Piocher une Carte
+                </button>
+                <button id="end-turn-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold px-6 py-3 rounded-xl text-sm transition-all border border-slate-700">
+                    Terminer le Tour
+                </button>
+            </div>
+        </div>
+
+        <!-- Main du Joueur -->
+        <div>
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Votre Main (5 cartes)</h3>
+            <div id="player-hand" class="grid grid-cols-5 gap-3">
+                <!-- Cartes générées dynamiquement -->
+            </div>
         </div>
     </div>
 
     <script>
-        // Initialisation de base sécurisée intégrée
+        // Logique de jeu interactive
         document.addEventListener("DOMContentLoaded", () => {
             const statusMsg = document.getElementById("status-msg");
             statusMsg.textContent = "Système opérationnel - Prêt à jouer";
-            
-            document.getElementById("start-solo-btn").addEventListener("click", () => {
-                const pseudo = document.getElementById("player-pseudo").value;
-                alert("Lancement de la partie solo pour : " + pseudo);
+
+            const homeScreen = document.getElementById("home-screen");
+            const gameScreen = document.getElementById("game-screen");
+            const startSoloBtn = document.getElementById("start-solo-btn");
+            const quitGameBtn = document.getElementById("quit-game-btn");
+            const playerPseudoInput = document.getElementById("player-pseudo");
+            const aiCountSelect = document.getElementById("ai-count");
+            const playerHand = document.getElementById("player-hand");
+            const opponentsContainer = document.getElementById("opponents-container");
+            const logBox = document.getElementById("log-box");
+            const drawCardBtn = document.getElementById("draw-card-btn");
+            const endTurnBtn = document.getElementById("end-turn-btn");
+
+            let gameState = {
+                pseudo: "TraderPro",
+                capital: 50000,
+                target: 250000,
+                hand: [],
+                opponents: []
+            };
+
+            const cardPool = [
+                { name: "Bull Run", type: "gain", value: 25000, desc: "+25 000 € de plus-value" },
+                { name: "Dividende", type: "gain", value: 15000, desc: "+15 000 € de rendement" },
+                { name: "Krach Flash", type: "attaque", value: -20000, desc: "Inflige -20 000 € à un rival" },
+                { name: "Bouclier Fiscal", type: "defense", value: 0, desc: "Protège votre capital" },
+                { name: "OPA Hostile", type: "attaque", value: -35000, desc: "Inflige -35 000 € à un rival" }
+            ];
+
+            startSoloBtn.addEventListener("click", () => {
+                gameState.pseudo = playerPseudoInput.value || "TraderPro";
+                const count = parseInt(aiCountSelect.value);
+
+                // Initialisation des IA
+                gameState.opponents = [];
+                for (let i = 1; i <= count; i++) {
+                    gameState.opponents.push({ name: `IA Bot ${i}`, capital: 50000 });
+                }
+
+                // Distribution de 5 cartes de départ
+                gameState.hand = [];
+                for (let i = 0; i < 5; i++) {
+                    gameState.hand.push(cardPool[Math.floor(Math.random() * cardPool.length)]);
+                }
+
+                homeScreen.classList.add("hidden");
+                gameScreen.classList.remove("hidden");
+                renderGame();
             });
+
+            quitGameBtn.addEventListener("click", () => {
+                gameScreen.classList.add("hidden");
+                homeScreen.classList.remove("hidden");
+            });
+
+            drawCardBtn.addEventListener("click", () => {
+                const randomCard = cardPool[Math.floor(Math.random() * cardPool.length)];
+                gameState.hand.push(randomCard);
+                logBox.textContent = `Vous avez pioché : ${randomCard.name} (${randomCard.desc})`;
+                renderGame();
+            });
+
+            endTurnBtn.addEventListener("click", () => {
+                logBox.textContent = "Tour des IA en cours...";
+                setTimeout(() => {
+                    // Tour rapide des IA
+                    gameState.opponents.forEach(ia => {
+                        ia.capital += Math.floor(Math.random() * 10000) + 5000;
+                    });
+                    logBox.textContent = "Les IA ont joué. C'est à votre tour !";
+                    renderGame();
+                }, 1000);
+            });
+
+            function renderGame() {
+                // Rendu des adversaires
+                opponentsContainer.innerHTML = "";
+                gameState.opponents.forEach((ia, index) => {
+                    opponentsContainer.innerHTML += `
+                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 text-center">
+                            <p class="text-xs font-bold text-amber-400 mb-1">${ia.name}</p>
+                            <p class="text-sm font-semibold text-white">${ia.capital.toLocaleString()} €</p>
+                            <button onclick="targetAi(${index})" class="mt-2 text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded border border-slate-700">Cibler</button>
+                        </div>
+                    `;
+                });
+
+                // Rendu de la main du joueur
+                playerHand.innerHTML = "";
+                gameState.hand.forEach((card, index) => {
+                    playerHand.innerHTML += `
+                        <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex flex-col justify-between h-32 cursor-pointer hover:border-emerald-500 transition-all" onclick="playCard(${index})">
+                            <div>
+                                <p class="text-xs font-bold text-emerald-400">${card.name}</p>
+                                <p class="text-[10px] text-slate-400 mt-1">${card.desc}</p>
+                            </div>
+                            <span class="text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded text-center font-semibold">Jouer</span>
+                        </div>
+                    `;
+                });
+            }
+
+            window.playCard = function(index) {
+                const card = gameState.hand[index];
+                if (card.type === "gain") {
+                    gameState.capital += card.value;
+                    logBox.textContent = `Effet appliqué : +${card.value} € !`;
+                } else {
+                    logBox.textContent = `Carte ${card.name} jouée avec succès.`;
+                }
+                gameState.hand.splice(index, 1);
+                renderGame();
+            };
+
+            window.targetAi = function(index) {
+                gameState.opponents[index].capital -= 15000;
+                logBox.textContent = `Vous avez attaqué ${gameState.opponents[index].name} (-15 000 €) !`;
+                renderGame();
+            };
         });
     </script>
 </body>
