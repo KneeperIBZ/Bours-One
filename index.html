@@ -1027,7 +1027,7 @@
             };
 
             if (db) {
-                const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', roomCode);
+                const roomRef = doc(db, 'artifacts', appId, 'rooms', roomCode);
                 await setDoc(roomRef, roomData);
             }
 
@@ -1054,7 +1054,7 @@
             isHost = false;
 
             if (db) {
-                const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', codeInput);
+                const roomRef = doc(db, 'artifacts', appId, 'rooms', codeInput);
                 const snap = await getDoc(roomRef);
                 if (!snap.exists()) {
                     return;
@@ -1090,7 +1090,7 @@
 
         window.startHostGame = async function() {
             if (!db || !currentRoomCode) return;
-            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', currentRoomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
             await updateDoc(roomRef, { status: 'playing' });
             document.getElementById('waiting-screen').classList.add('hidden');
         }
@@ -1099,7 +1099,7 @@
 
         function listenToRoom(roomCode) {
             if (!db) return;
-            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', roomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'rooms', roomCode);
             unsubscribeRoom = onSnapshot(roomRef, (docSnap) => {
                 if (!docSnap.exists()) return;
                 const state = docSnap.data();
@@ -1240,7 +1240,7 @@
             }
             me.hasDrawnThisTurn = true;
 
-            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', currentRoomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
             await updateDoc(roomRef, {
                 deck: currentRoomState.deck,
                 discardPile: currentRoomState.discardPile,
@@ -1327,7 +1327,7 @@
                 }
             }
 
-            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', currentRoomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
             await updateDoc(roomRef, {
                 deck: currentRoomState.deck,
                 discardPile: currentRoomState.discardPile,
@@ -1372,7 +1372,7 @@
 
             closeDiscardFromHandModal();
 
-            const roomRef = doc(db, 'artifacts', appId, 'public_data', 'rooms', currentRoomCode);
+            const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
             await updateDoc(roomRef, {
                 discardPile: currentRoomState.discardPile,
                 players: currentRoomState.players,
