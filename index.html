@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr" class="h-full">
+<html lang="fr" class="h-[100dvh]">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Bours'One - Le Jeu de Cartes Financier Ultime</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
     </style>
     <meta name="google-adsense-account" content="ca-pub-4699930938210923">
 </head>
-<body class="bg-[#030605] text-slate-100 h-full flex flex-col overflow-hidden select-none">
+<body class="bg-[#030605] text-slate-100 h-[100dvh] flex flex-col overflow-hidden select-none">
 
     <div id="setup-screen" class="fixed inset-0 bg-[#030605]/98 backdrop-blur-2xl z-50 flex items-center justify-center p-4">
         <div class="bg-slate-950 border border-emerald-500/30 rounded-3xl max-w-lg w-full p-8 shadow-2xl text-center relative overflow-hidden">
@@ -73,7 +73,6 @@
                     <input type="text" id="player-name-input" value="TraderPro" placeholder="Ex: WarrenBuffett99" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 font-medium">
                 </div>
 
-                <!-- Global Objective & Configuration Box -->
                 <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 space-y-3">
                     <span class="text-[10px] uppercase font-extrabold text-teal-400 tracking-wider block">Paramètres de Partie</span>
                     
@@ -85,7 +84,6 @@
                         <input type="range" id="objective-slider" min="100000" max="5000000" step="50000" value="250000" oninput="updateObjectiveSlider(this.value)" class="w-full accent-emerald-500 bg-slate-950 cursor-pointer h-2 rounded-lg">
                     </div>
 
-                    <!-- Solo Configuration -->
                     <div class="pt-2 border-t border-slate-800">
                         <label class="block text-[10px] text-slate-400 mb-1 font-bold">Adversaires IA (Mode Solo) :</label>
                         <select id="ai-count-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-emerald-500 mb-2">
@@ -99,7 +97,6 @@
                     </div>
                 </div>
 
-                <!-- Online Multiplayer Buttons -->
                 <div class="grid grid-cols-2 gap-2 pt-1">
                     <button onclick="hostNewGame()" class="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl shadow-lg transition text-xs tracking-wide">
                         🏠 Créer Salon (1-4 J.)
@@ -190,20 +187,15 @@
     <main class="flex-1 flex flex-col overflow-hidden relative">
         <section class="flex-1 poker-table-bg relative flex flex-col justify-between p-4 overflow-hidden select-none">
             
-            <!-- Target Selection Banner -->
             <div id="target-selection-banner" class="absolute top-3 left-1/2 transform -translate-x-1/2 bg-red-950/95 border-2 border-red-500 px-6 py-2.5 rounded-2xl shadow-2xl z-40 hidden flex items-center space-x-4 animate-glow">
                 <span id="target-banner-text" class="text-xs font-black text-red-200">🎯 Cliquez sur le joueur cible de votre attaque !</span>
                 <button onclick="cancelAttackTargetSelection()" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold rounded-lg border border-slate-700">Annuler</button>
             </div>
 
-            <!-- Opponents Grid Panel (Up to 3 opponents displayed dynamically) -->
             <div class="w-full max-w-5xl mx-auto z-20 px-2 mt-1">
-                <div id="opponents-container" class="grid grid-cols-1 md:grid-cols-3 gap-2">
-                    <!-- Populated dynamically -->
-                </div>
+                <div id="opponents-container" class="grid grid-cols-1 md:grid-cols-3 gap-2"></div>
             </div>
 
-            <!-- Central Table Deck, Discard & Super Shields -->
             <div class="flex justify-between items-center w-full px-4 my-1">
                 <div class="flex flex-col">
                     <span class="text-[10px] uppercase font-bold text-amber-400 mb-1 tracking-wider drop-shadow">⭐ Boucliers Permanents Actifs</span>
@@ -237,7 +229,6 @@
                 </div>
             </div>
 
-            <!-- Player Board & Hand Area -->
             <div class="flex flex-col items-center z-20">
                 <div class="w-full max-w-5xl flex justify-between items-end px-2 mb-2">
                     <div class="flex flex-col items-start">
@@ -307,8 +298,8 @@
             <div class="text-xs text-slate-300 space-y-2.5 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin">
                 <p><strong>Objectif de Capital :</strong> Accumulez des actifs boursiers et bancaires pour atteindre l'objectif fixé en premier.</p>
                 <p><strong>Pioche Obligatoire & Main de 5 cartes :</strong> À chaque tour, piochez impérativement une carte avant toute action.</p>
-                <p><strong>Sélection de Cible d'Attaque :</strong> Lorsque vous jouez une carte d'attaque (Inflation, Frais, FOMO, Krach), cliquez sur l'adversaire ou le joueur spécifique que vous souhaitez cibler.</p>
-                <p><strong>Super Cartes & Boucliers Permanents :</strong> Intégrées au deck, elles restent actives indéfiniment comme boucliers bloquant l'attaque associée.</p>
+                <p><strong>Sélection de Cible d'Attaque :</strong> Lorsque vous jouez une carte d'attaque, cliquez sur le joueur cible spécifique.</p>
+                <p><strong>Super Cartes & Boucliers Permanents :</strong> Restent actifs indéfiniment comme boucliers bloquant l'attaque associée.</p>
             </div>
             <div class="mt-5 text-center">
                 <button onclick="toggleRulesModal()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs">J'ai compris</button>
@@ -994,7 +985,6 @@
             });
         }
 
-        // ONLINE MULTIPLAYER (Up to 4 players)
         window.hostNewGame = async function() {
             isSoloMode = false;
             const nameInput = document.getElementById('player-name-input').value.trim();
@@ -1144,7 +1134,6 @@
         function renderOnlineGameState(state) {
             const myUid = currentUser?.uid;
             const playerOrder = state.playerOrder || Object.keys(state.players);
-            const myIndex = playerOrder.indexOf(myUid);
             const me = state.players[myUid];
 
             if (!me) return;
@@ -1204,7 +1193,6 @@
                 pTrapSlot.innerHTML = `<span class="text-[10px] text-slate-500 italic">Aucune attaque</span>`;
             }
 
-            // Render opponents grid dynamically
             const opponentsContainer = document.getElementById('opponents-container');
             opponentsContainer.innerHTML = '';
             
@@ -1265,7 +1253,6 @@
                 banner.classList.add('hidden');
             }
 
-            // Check win conditions
             if (me.capital >= TARGET_CAPITAL) {
                 showGameOverModal(true, me.name);
             } else {
@@ -1404,7 +1391,6 @@
             currentRoomState.turnIndex++;
             currentRoomState.roundNumber++;
 
-            // Handle compounding traps for next player
             const playerOrder = currentRoomState.playerOrder;
             const nextActiveUid = playerOrder[currentRoomState.turnIndex % playerOrder.length];
             const nextPlayer = currentRoomState.players[nextActiveUid];
