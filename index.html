@@ -168,7 +168,7 @@
             </div>
             <div class="px-2">
                 <span class="text-slate-500 block text-[9px] uppercase font-bold">Pioche</span>
-                <span id="deck-count-top" class="font-bold text-teal-400">110</span>
+                <span id="deck-count-top" class="font-bold text-teal-400">∞</span>
             </div>
         </div>
 
@@ -224,7 +224,7 @@
                     <div class="flex items-center space-x-2 bg-slate-950/90 backdrop-blur px-3 py-2 rounded-2xl border border-emerald-500/20 shadow-xl">
                         <div onclick="playerDrawCardManual()" id="deck-draw-click" class="w-12 h-16 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 border border-emerald-500/40 rounded-xl shadow cursor-pointer flex flex-col items-center justify-center hover:scale-105 transition group relative">
                             <span class="text-[8px] text-emerald-400 font-black group-hover:text-emerald-300">PIOCHE</span>
-                            <span id="deck-count" class="text-[10px] text-white font-mono font-bold">110</span>
+                            <span id="deck-count" class="text-[10px] text-white font-mono font-bold">∞</span>
                         </div>
                         <div onclick="toggleDiscardModal()" class="w-12 h-16 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow cursor-pointer flex flex-col items-center justify-center hover:border-slate-500 transition relative">
                             <span class="text-[8px] text-slate-400 font-bold">POUBELLE</span>
@@ -473,6 +473,25 @@
             return deck;
         }
 
+        // Pioche infinie : dès que la pioche est vide, on remet la défausse
+        // dans la pioche. Si les deux sont vides, on recrée automatiquement
+        // un nouveau paquet complet. Ainsi, il est impossible de tomber à court.
+        function ensureInfiniteDeck(state) {
+            if (state.deck.length > 0) return;
+
+            if (state.discardPile.length > 0) {
+                state.deck = [...state.discardPile];
+                state.discardPile = [];
+            } else {
+                state.deck = generateDeck();
+            }
+
+            for (let i = state.deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [state.deck[i], state.deck[j]] = [state.deck[j], state.deck[i]];
+            }
+        }
+
         window.startSoloGame = function() {
             isSoloMode = true;
             const name = document.getElementById('player-name-input').value.trim() || "TraderPro";
@@ -534,8 +553,8 @@
             document.getElementById('my-name-tag').textContent = me.name;
             document.getElementById('player-capital').textContent = formatCurrency(me.capital);
 
-            document.getElementById('deck-count').textContent = state.deck.length;
-            document.getElementById('deck-count-top').textContent = state.deck.length;
+            document.getElementById('deck-count').textContent = '∞';
+            document.getElementById('deck-count-top').textContent = '∞';
             document.getElementById('discard-count').textContent = state.discardPile.length;
             document.getElementById('round-indicator').textContent = state.roundNumber;
 
@@ -649,18 +668,9 @@
                 const me = soloState.player;
                 if (me.hasDrawnThisTurn) return;
 
-                if (soloState.deck.length === 0 && soloState.discardPile.length > 0) {
-                    soloState.deck = [...soloState.discardPile];
-                    soloState.discardPile = [];
-                    for (let i = soloState.deck.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [soloState.deck[i], soloState.deck[j]] = [soloState.deck[j], soloState.deck[i]];
-                    }
-                }
-
-                if (soloState.deck.length > 0) {
-                    me.hand.push(soloState.deck.pop());
-                }
+                // Pioche toujours disponible, même après épuisement de la défausse.
+                ensureInfiniteDeck(soloState);
+                me.hand.push(soloState.deck.pop());
                 me.hasDrawnThisTurn = true;
                 renderSoloState();
             } else {
@@ -773,17 +783,9 @@
             const ai = soloState.ais[aiIdx];
             const me = soloState.player;
 
-            if (soloState.deck.length === 0 && soloState.discardPile.length > 0) {
-                soloState.deck = [...soloState.discardPile];
-                soloState.discardPile = [];
-                for (let i = soloState.deck.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [soloState.deck[i], soloState.deck[j]] = [soloState.deck[j], soloState.deck[i]];
-                }
-            }
-            if (soloState.deck.length > 0) {
-                ai.hand.push(soloState.deck.pop());
-            }
+            // L'IA bénéficie elle aussi de la pioche infinie.
+            ensureInfiniteDeck(soloState);
+            ai.hand.push(soloState.deck.pop());
 
             if (ai.hand.length > 0) {
                 const assetIdx = ai.hand.findIndex(c => c.type === 'asset');
@@ -1136,8 +1138,8 @@
             document.getElementById('my-name-tag').textContent = me.name;
             document.getElementById('player-capital').textContent = formatCurrency(me.capital);
 
-            document.getElementById('deck-count').textContent = state.deck.length;
-            document.getElementById('deck-count-top').textContent = state.deck.length;
+            document.getElementById('deck-count').textContent = '∞';
+            document.getElementById('deck-count-top').textContent = '∞';
             document.getElementById('discard-count').textContent = state.discardPile.length;
             document.getElementById('round-indicator').textContent = state.roundNumber;
 
@@ -1261,18 +1263,9 @@
             const me = currentRoomState.players[myUid];
             if (me.hasDrawnThisTurn) return;
 
-            if (currentRoomState.deck.length === 0 && currentRoomState.discardPile.length > 0) {
-                currentRoomState.deck = [...currentRoomState.discardPile];
-                currentRoomState.discardPile = [];
-                for (let i = currentRoomState.deck.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [currentRoomState.deck[i], currentRoomState.deck[j]] = [currentRoomState.deck[j], currentRoomState.deck[i]];
-                }
-            }
-
-            if (currentRoomState.deck.length > 0) {
-                me.hand.push(currentRoomState.deck.pop());
-            }
+            // Pioche infinie en multijoueur également.
+            ensureInfiniteDeck(currentRoomState);
+            me.hand.push(currentRoomState.deck.pop());
             me.hasDrawnThisTurn = true;
 
             const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
