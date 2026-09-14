@@ -33,10 +33,10 @@
             transform: translateY(-4px);
         }
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.35); }
-            50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.75); }
+            0%, 100% { box-shadow: 0 0 20px rgba(248, 113, 113, 0.6); border-color: rgba(248, 113, 113, 1); }
+            50% { box-shadow: 0 0 40px rgba(248, 113, 113, 0.95); border-color: rgba(239, 68, 68, 1); }
         }
-        .animate-glow { animation: pulseGlow 2.5s infinite; }
+        .animate-target-glow { animation: pulseGlow 1.5s infinite; }
         .scrollbar-thin::-webkit-scrollbar { width: 4px; height: 4px; }
         .scrollbar-thin::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 4px; }
         .target-selectable {
@@ -44,9 +44,7 @@
             transition: all 0.2s ease;
         }
         .target-selectable:hover {
-            transform: scale(1.04);
-            border-color: rgba(248, 113, 113, 0.9) !important;
-            box-shadow: 0 0 25px rgba(248, 113, 113, 0.5);
+            transform: scale(1.03);
         }
     </style>
     <meta name="google-adsense-account" content="ca-pub-4699930938210923">
@@ -54,7 +52,7 @@
 <body class="bg-[#030605] text-slate-100 h-full flex flex-col overflow-hidden select-none">
 
     <div id="setup-screen" class="fixed inset-0 bg-[#030605]/98 backdrop-blur-2xl z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-950 border border-emerald-500/30 rounded-3xl max-w-lg w-full p-8 shadow-2xl text-center relative overflow-hidden">
+        <div class="bg-slate-950 border border-emerald-500/35 rounded-3xl max-w-lg w-full p-8 shadow-2xl text-center relative overflow-hidden">
             <div class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -73,7 +71,6 @@
                     <input type="text" id="player-name-input" value="TraderPro" placeholder="Ex: WarrenBuffett99" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 font-medium">
                 </div>
 
-                <!-- Global Objective & Configuration Box -->
                 <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 space-y-3">
                     <span class="text-[10px] uppercase font-extrabold text-teal-400 tracking-wider block">Paramètres de Partie</span>
                     
@@ -85,7 +82,6 @@
                         <input type="range" id="objective-slider" min="100000" max="5000000" step="50000" value="250000" oninput="updateObjectiveSlider(this.value)" class="w-full accent-emerald-500 bg-slate-950 cursor-pointer h-2 rounded-lg">
                     </div>
 
-                    <!-- Solo Configuration -->
                     <div class="pt-2 border-t border-slate-800">
                         <label class="block text-[10px] text-slate-400 mb-1 font-bold">Adversaires IA (Mode Solo) :</label>
                         <select id="ai-count-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-emerald-500 mb-2">
@@ -99,7 +95,6 @@
                     </div>
                 </div>
 
-                <!-- Online Multiplayer Buttons -->
                 <div class="grid grid-cols-2 gap-2 pt-1">
                     <button onclick="hostNewGame()" class="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl shadow-lg transition text-xs tracking-wide">
                         🏠 Créer Salon (1-4 J.)
@@ -113,7 +108,7 @@
             <div class="border-t border-slate-900 pt-3 text-left">
                 <span class="text-[10px] text-slate-500 block mb-1 font-bold uppercase tracking-wider">Caractéristiques Pro :</span>
                 <p class="text-[10px] text-slate-400 leading-relaxed">
-                    Multijoueur en ligne jusqu'à 4 joueurs • Pioche obligatoire • Ciblez n'importe quel joueur pour vos attaques • Boucliers permanents.
+                    Multijoueur en ligne • Ciblez directement les cartes adverses • Pioche et poubelle compactes au centre • Gestion de portefeuille centrale.
                 </p>
             </div>
         </div>
@@ -188,87 +183,81 @@
     </header>
 
     <main class="flex-1 flex flex-col overflow-hidden relative">
-        <section class="flex-1 poker-table-bg relative flex flex-col justify-between p-4 overflow-hidden select-none">
+        <section class="flex-1 poker-table-bg relative flex flex-col justify-between p-3 overflow-hidden select-none">
             
-            <!-- Target Selection Banner -->
-            <div id="target-selection-banner" class="absolute top-3 left-1/2 transform -translate-x-1/2 bg-red-950/95 border-2 border-red-500 px-6 py-2.5 rounded-2xl shadow-2xl z-40 hidden flex items-center space-x-4 animate-glow">
-                <span id="target-banner-text" class="text-xs font-black text-red-200">🎯 Cliquez sur le joueur cible de votre attaque !</span>
-                <button onclick="cancelAttackTargetSelection()" class="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold rounded-lg border border-slate-700">Annuler</button>
-            </div>
-
-            <!-- Opponents Grid Panel (Up to 3 opponents displayed dynamically) -->
+            <!-- Opponents container -->
             <div class="w-full max-w-5xl mx-auto z-20 px-2 mt-1">
                 <div id="opponents-container" class="grid grid-cols-1 md:grid-cols-3 gap-2">
-                    <!-- Populated dynamically -->
                 </div>
             </div>
 
-            <!-- Central Table Deck, Discard & Super Shields -->
+            <!-- Central layout swapping asset stack to center and compacting deck/discard pile -->
             <div class="flex justify-between items-center w-full px-4 my-1">
                 <div class="flex flex-col">
                     <span class="text-[10px] uppercase font-bold text-amber-400 mb-1 tracking-wider drop-shadow">⭐ Boucliers Permanents Actifs</span>
-                    <div id="super-cards-container" class="flex space-x-2 min-h-[55px] items-center bg-slate-950/85 backdrop-blur p-2 rounded-2xl border border-amber-500/30 shadow-lg">
+                    <div id="super-cards-container" class="flex space-x-2 min-h-[50px] items-center bg-slate-950/85 backdrop-blur p-2 rounded-2xl border border-amber-500/30 shadow-lg">
                         <span class="text-[10px] text-slate-500 italic px-2">Aucun bouclier actif</span>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-4 bg-slate-950/85 backdrop-blur px-6 py-3 rounded-3xl border border-emerald-500/30 shadow-2xl">
-                    <div class="flex flex-col items-center">
-                        <div onclick="playerDrawCardManual()" id="deck-draw-click" class="w-14 h-20 bg-gradient-to-br from-slate-900 to-emerald-950 border border-emerald-500/40 rounded-xl shadow-md cursor-pointer flex flex-col items-center justify-center hover:scale-105 transition">
-                            <span class="text-[9px] text-emerald-400 font-bold">Pioche</span>
-                            <span id="deck-count" class="text-xs text-white font-mono">110</span>
-                        </div>
+                <!-- Central Prominent Asset Stack (Moved from bottom corner to center stage) -->
+                <div class="flex flex-col items-center bg-slate-950/90 backdrop-blur border border-emerald-500/40 p-2.5 rounded-3xl shadow-2xl max-w-sm w-full">
+                    <div class="flex justify-between items-center w-full px-2 mb-1.5">
+                        <span class="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">💼 Votre Portefeuille d'Actifs</span>
+                        <span id="player-capital" class="text-xs font-black text-emerald-400">0 €</span>
                     </div>
-                    <div class="flex flex-col items-center">
-                        <div onclick="toggleDiscardModal()" class="w-14 h-20 bg-slate-900 border border-slate-800 rounded-xl shadow-md cursor-pointer flex flex-col items-center justify-center hover:border-slate-600 transition relative">
-                            <span class="text-[9px] text-slate-400 font-bold">Poubelle</span>
-                            <span id="discard-count" class="text-xs text-slate-200 font-mono">0</span>
-                            <span class="absolute -top-1 -right-1 text-[8px] bg-slate-800 text-slate-300 px-1 rounded border border-slate-700">Voir</span>
-                        </div>
+                    <div id="player-asset-stack" class="w-full h-24 flex flex-col items-center justify-start overflow-y-auto scrollbar-thin p-1 bg-slate-900/80 border border-slate-800 rounded-2xl">
+                        <span class="text-[10px] text-slate-500 italic mt-6">Pile vide</span>
                     </div>
                 </div>
 
-                <div class="bg-slate-950/90 backdrop-blur border border-red-500/30 p-3 rounded-2xl shadow-lg w-48 text-center flex flex-col items-center">
-                    <span class="text-[10px] uppercase font-bold text-red-400 mb-1 tracking-wider">🚨 Attaque Active</span>
-                    <div id="player-trap-slot" class="w-full min-h-[45px] flex items-center justify-center my-0.5 space-x-1 overflow-x-auto">
-                        <span class="text-[10px] text-slate-500 italic">Aucune attaque</span>
+                <div class="flex flex-col items-center space-y-1">
+                    <div class="bg-slate-950/95 backdrop-blur border border-red-500/30 p-2 rounded-2xl shadow-lg w-40 text-center flex flex-col items-center">
+                        <span class="text-[9px] uppercase font-bold text-red-400 mb-0.5 tracking-wider">🚨 Attaque Active</span>
+                        <div id="player-trap-slot" class="w-full min-h-[35px] flex items-center justify-center space-x-1 overflow-x-auto">
+                            <span class="text-[9px] text-slate-500 italic">Aucune attaque</span>
+                        </div>
+                        <span id="player-trap-status" class="text-[8px] text-slate-400 font-semibold truncate w-full">Voie libre</span>
                     </div>
-                    <span id="player-trap-status" class="text-[9px] text-slate-400 font-semibold">Voie libre</span>
+
+                    <!-- Compacted Discard & Deck Pile (Moved to right side) -->
+                    <div class="flex items-center space-x-2 bg-slate-950/90 backdrop-blur px-3 py-2 rounded-2xl border border-emerald-500/20 shadow-xl">
+                        <div onclick="playerDrawCardManual()" id="deck-draw-click" class="w-12 h-16 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 border border-emerald-500/40 rounded-xl shadow cursor-pointer flex flex-col items-center justify-center hover:scale-105 transition group relative">
+                            <span class="text-[8px] text-emerald-400 font-black group-hover:text-emerald-300">PIOCHE</span>
+                            <span id="deck-count" class="text-[10px] text-white font-mono font-bold">110</span>
+                        </div>
+                        <div onclick="toggleDiscardModal()" class="w-12 h-16 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow cursor-pointer flex flex-col items-center justify-center hover:border-slate-500 transition relative">
+                            <span class="text-[8px] text-slate-400 font-bold">POUBELLE</span>
+                            <span id="discard-count" class="text-[10px] text-slate-200 font-mono font-bold" id="discard-count">0</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Player Board & Hand Area -->
             <div class="flex flex-col items-center z-20">
-                <div class="w-full max-w-5xl flex justify-between items-end px-2 mb-2">
-                    <div class="flex flex-col items-start">
-                        <div id="player-asset-stack" class="w-64 h-24 flex flex-col items-center justify-start overflow-y-auto scrollbar-thin p-1 bg-slate-950/90 border border-emerald-500/40 rounded-2xl">
-                            <span class="text-[10px] text-slate-500 italic mt-6">Pile vide</span>
-                        </div>
+                <div class="w-full max-w-5xl flex justify-between items-center px-2 mb-1">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs font-black text-slate-300">Trader : <span id="my-name-tag" class="text-emerald-400">Moi</span></span>
                     </div>
 
                     <div class="flex flex-col items-center">
                         <div id="turn-badge" class="px-4 py-1.5 bg-amber-500/20 border border-amber-500 text-amber-300 font-bold text-xs rounded-full animate-glow text-center mb-1">
                             Tour 1 : Piochez obligatoirement une carte
                         </div>
-                        <span class="text-[9px] text-amber-400/90 italic">Obligation de piocher avant de pouvoir jouer ou défausser</span>
                     </div>
 
-                    <div class="bg-slate-950/95 backdrop-blur border border-emerald-500/50 px-4 py-2 rounded-2xl shadow-2xl flex flex-col items-end">
-                        <span class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">Votre Capital (<span id="my-name-tag">Moi</span>)</span>
-                        <span id="player-capital" class="text-base font-black text-emerald-400">0 €</span>
-                    </div>
-                </div>
-
-                <div class="w-full max-w-5xl relative flex justify-between items-end px-2">
-                    <div id="player-hand" class="card-container flex-1 mr-4"></div>
-                    <div class="flex flex-col space-y-2 mb-2">
-                        <button onclick="playerDrawCardManual()" id="draw-btn" class="px-4 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl text-xs shadow transition">
+                    <div class="flex items-center space-x-2">
+                        <button onclick="playerDrawCardManual()" id="draw-btn" class="px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl text-xs shadow transition">
                             Piocher 📥
                         </button>
-                        <button onclick="openDiscardFromHandModal()" id="discard-turn-btn" class="px-4 py-2.5 bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 font-bold rounded-xl text-xs shadow transition border border-amber-500/30 opacity-50 cursor-not-allowed">
+                        <button onclick="openDiscardFromHandModal()" id="discard-turn-btn" class="px-3.5 py-2 bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 font-bold rounded-xl text-xs shadow transition border border-amber-500/30 opacity-50 cursor-not-allowed">
                             Défausser 🗑️
                         </button>
                     </div>
+                </div>
+
+                <div class="w-full max-w-5xl relative flex justify-center px-2">
+                    <div id="player-hand" class="card-container w-full"></div>
                 </div>
             </div>
         </section>
@@ -307,7 +296,7 @@
             <div class="text-xs text-slate-300 space-y-2.5 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin">
                 <p><strong>Objectif de Capital :</strong> Accumulez des actifs boursiers et bancaires pour atteindre l'objectif fixé en premier.</p>
                 <p><strong>Pioche Obligatoire & Main de 5 cartes :</strong> À chaque tour, piochez impérativement une carte avant toute action.</p>
-                <p><strong>Sélection de Cible d'Attaque :</strong> Lorsque vous jouez une carte d'attaque (Inflation, Frais, FOMO, Krach), cliquez sur l'adversaire ou le joueur spécifique que vous souhaitez cibler.</p>
+                <p><strong>Sélection de Cible d'Attaque (Sans bandeau intrusif) :</strong> Lorsqu'une carte d'attaque est jouée, les cartes/box des adversaires s'illuminent et s'encadrent en rouge vif clignotant. Cliquez simplement directement sur l'adversaire visé.</p>
                 <p><strong>Super Cartes & Boucliers Permanents :</strong> Intégrées au deck, elles restent actives indéfiniment comme boucliers bloquant l'attaque associée.</p>
             </div>
             <div class="mt-5 text-center">
@@ -389,23 +378,23 @@
             { id: 'lep', name: 'LEP', type: 'asset', category: 'Livret', value: VAL_LIVRET, color: SHADE_LIVRET_3, icon: '🛡️', count: 2 },
             { id: 'livret_jeune', name: 'Livret Jeune', type: 'asset', category: 'Livret', value: VAL_LIVRET, color: SHADE_LIVRET_4, icon: '⭐', count: 2 },
             { id: 'etf_tech', name: 'ETF - Tech S&P', type: 'asset', category: 'ETF', value: VAL_ETF, color: SHADE_ETF_1, icon: '💻', count: 3 },
-            { id: 'etf_sante', name: 'ETF - Santé', type: 'asset', category: 'ETF', value: VAL_ETF, color: SHADE_ETF_2, icon: '🧬', count: 3 },
+            { id: 'etf_sante', name: 'ETF - Santé Global', type: 'asset', category: 'ETF', value: VAL_ETF, color: SHADE_ETF_2, icon: '🧬', count: 3 },
             { id: 'etf_energie', name: 'ETF - Énergie Verte', type: 'asset', category: 'ETF', value: VAL_ETF, color: SHADE_ETF_3, icon: '⚡', count: 3 },
-            { id: 'act_luxe', name: 'Action - Luxe ', type: 'asset', category: 'Action', value: VAL_ACTION, color: SHADE_ACT_1, icon: '👜', count: 3 },
+            { id: 'act_luxe', name: 'Action - Luxe CAC', type: 'asset', category: 'Action', value: VAL_ACTION, color: SHADE_ACT_1, icon: '👜', count: 3 },
             { id: 'act_aero', name: 'Action - Aéronautique', type: 'asset', category: 'Action', value: VAL_ACTION, color: SHADE_ACT_2, icon: '✈️', count: 3 },
             { id: 'crypto_pay', name: 'Crypto - Éther Coin', type: 'asset', category: 'Crypto', value: VAL_CRYPTO, color: SHADE_CRYPTO_1, icon: '🪙', count: 3 },
-            { id: 'crypto_ai', name: 'Crypto - AI', type: 'asset', category: 'Crypto', value: VAL_CRYPTO, color: SHADE_CRYPTO_2, icon: '🤖', count: 3 },
-            { id: 'inflation', name: 'Inflation', type: 'trap', category: 'Attaque', penaltyPercent: 5, compoundingRate: 5, maxPercent: 35, counters: 'bouclier', color: SHADE_INFLATION, icon: '🔥', count: 6 },
-            { id: 'frais', name: 'Frais Bancaires', type: 'trap', category: 'Attaque', penaltyPercent: 2, compoundingRate: 2, maxPercent: 35, counters: 'courtier', color: SHADE_FRAIS, icon: '💸', count: 6 },
-            { id: 'fomo', name: 'FOMO', type: 'trap', category: 'Attaque', penaltyPercent: 30, compoundingRate: 0, maxPercent: 30, counters: 'epargne_secu', color: SHADE_FOMO, icon: '🌪️', count: 5 },
-            { id: 'krach', name: 'Krach Boursier', type: 'trap', category: 'Attaque', penaltyPercent: 50, compoundingRate: 0, maxPercent: 50, counters: 'regulation', color: SHADE_KRACH, icon: '📉', count: 4 },
+            { id: 'crypto_ai', name: 'Crypto - Artificial AI', type: 'asset', category: 'Crypto', value: VAL_CRYPTO, color: SHADE_CRYPTO_2, icon: '🤖', count: 3 },
+            { id: 'inflation', name: 'Inflation Galopante', type: 'trap', category: 'Attaque', penaltyPercent: 5, compoundingRate: 5, maxPercent: 35, counters: 'bouclier', color: SHADE_INFLATION, icon: '🔥', count: 6 },
+            { id: 'frais', name: 'Frais Bancaires Abusifs', type: 'trap', category: 'Attaque', penaltyPercent: 2, compoundingRate: 2, maxPercent: 35, counters: 'courtier', color: SHADE_FRAIS, icon: '💸', count: 6 },
+            { id: 'fomo', name: 'Panique FOMO', type: 'trap', category: 'Attaque', penaltyPercent: 30, compoundingRate: 0, maxPercent: 30, counters: 'epargne_secu', color: SHADE_FOMO, icon: '🌪️', count: 5 },
+            { id: 'krach', name: 'Krach Boursier Majeur', type: 'trap', category: 'Attaque', penaltyPercent: 50, compoundingRate: 0, maxPercent: 50, counters: 'regulation', color: SHADE_KRACH, icon: '📉', count: 4 },
             { id: 'courtier', name: 'Courtier Low-Cost', type: 'defense', category: 'Défense', counters: 'frais', color: SHADE_COURTIER, icon: '💼', count: 5 },
             { id: 'epargne_secu', name: 'Gestion Émotionnelle', type: 'defense', category: 'Défense', counters: 'fomo', color: SHADE_EPARGNE, icon: '🧘', count: 5 },
             { id: 'bouclier', name: 'Bouclier Anti-Inflation', type: 'defense', category: 'Défense', counters: 'inflation', color: SHADE_BOUCLIER, icon: '🛡️', count: 5 },
             { id: 'regulation', name: 'Régulation BCE', type: 'defense', category: 'Défense', counters: 'krach', color: SHADE_REGULATION, icon: '⚖️', count: 5 },
             { id: 'super_bouclier_inflation', name: 'Bouclier Master Inflation', type: 'super', category: 'Permanent', counters: 'inflation', color: SHADE_SUPER, icon: '🛡️🔥', count: 1 },
             { id: 'super_bouclier_frais', name: 'Super Courtier Élite', type: 'super', category: 'Permanent', counters: 'frais', color: SHADE_SUPER, icon: '💼💸', count: 1 },
-            { id: 'super_bouclier_fomo', name: 'Zenitude Permanente', type: 'super', category: 'Permanent', counters: 'fomo', color: SHADE_SUPER, icon: '🧘🌪️', count: 1 },
+            { id: 'super_bouclier_fomo', name: 'Zenith Émotionnel Permanent', type: 'super', category: 'Permanent', counters: 'fomo', color: SHADE_SUPER, icon: '🧘🌪️', count: 1 },
             { id: 'super_bouclier_krach', name: 'Bouclier Souverain BCE', type: 'super', category: 'Permanent', counters: 'krach', color: SHADE_SUPER, icon: '⚖️📉', count: 1 }
         ];
 
@@ -447,7 +436,29 @@
         window.showJoinModal = function() { document.getElementById('join-modal').classList.remove('hidden'); }
         window.hideJoinModal = function() { document.getElementById('join-modal').classList.add('hidden'); }
         window.toggleRulesModal = function() { document.getElementById('rules-modal').classList.toggle('hidden'); }
-        window.toggleDiscardModal = function() { document.getElementById('discard-modal').classList.toggle('hidden'); }
+        window.toggleDiscardModal = function() {
+            const discardModal = document.getElementById('discard-modal');
+            discardModal.classList.toggle('hidden');
+            if (!discardModal.classList.contains('hidden')) {
+                renderDiscardModalContent();
+            }
+        }
+
+        function renderDiscardModalContent() {
+            const content = document.getElementById('discard-modal-content');
+            const discardPile = isSoloMode ? (soloState?.discardPile || []) : (currentRoomState?.discardPile || []);
+            if (!discardPile || discardPile.length === 0) {
+                content.innerHTML = '<span class="text-xs text-slate-500 italic col-span-4 text-center py-4">Poubelle vide</span>';
+                return;
+            }
+            content.innerHTML = '';
+            discardPile.forEach(card => {
+                const el = document.createElement('div');
+                el.className = `bg-gradient-to-b ${card.color} border rounded-xl p-2 flex flex-col justify-between shadow h-20`;
+                el.innerHTML = `<div class="flex justify-between items-start"><span class="text-xs">${card.icon}</span><span class="text-[7px] bg-slate-950/80 px-1 py-0.2 rounded text-white font-mono">${card.category}</span></div><div><h4 class="font-bold text-[10px] text-white leading-tight truncate">${card.name}</h4></div>`;
+                content.appendChild(el);
+            });
+        }
 
         function generateDeck() {
             let deck = [];
@@ -543,7 +554,7 @@
                     deckClick.classList.remove('opacity-50');
                     discardTurnBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 } else if (pendingAttackCard) {
-                    badge.textContent = "Sélectionnez l'adversaire cible pour votre attaque !";
+                    badge.textContent = "Ciblez un adversaire (clignotement rouge ci-dessus) !";
                     badge.className = "px-4 py-1.5 bg-red-500/20 border border-red-500 text-red-300 font-bold text-xs rounded-full animate-glow text-center mb-1";
                     drawBtn.classList.add('opacity-50', 'cursor-not-allowed');
                     deckClick.classList.add('opacity-50');
@@ -568,10 +579,10 @@
             const pTrapStatus = document.getElementById('player-trap-status');
             if (me.activeTrap) {
                 pTrapStatus.textContent = `${me.activeTrap.name} (-${me.activeTrap.currentPercent}%)`;
-                pTrapSlot.innerHTML = `<div class="w-12 h-16 bg-gradient-to-br from-red-950 to-slate-950 border border-red-500 rounded-lg flex flex-col items-center justify-center text-white shadow animate-pulse p-0.5"><span class="text-sm">${me.activeTrap.icon}</span><span class="text-[8px] font-bold">-${me.activeTrap.currentPercent}%</span></div>`;
+                pTrapSlot.innerHTML = `<div class="w-10 h-14 bg-gradient-to-br from-red-950 to-slate-950 border border-red-500 rounded-lg flex flex-col items-center justify-center text-white shadow animate-pulse p-0.5"><span class="text-xs">${me.activeTrap.icon}</span><span class="text-[7px] font-bold">-${me.activeTrap.currentPercent}%</span></div>`;
             } else {
-                pTrapStatus.textContent = "Voie libre / Aucun piège";
-                pTrapSlot.innerHTML = `<span class="text-[10px] text-slate-500 italic">Aucune attaque</span>`;
+                pTrapStatus.textContent = "Voie libre";
+                pTrapSlot.innerHTML = `<span class="text-[9px] text-slate-500 italic">Aucune</span>`;
             }
 
             const opponentsContainer = document.getElementById('opponents-container');
@@ -579,7 +590,7 @@
             ais.forEach((ai, idx) => {
                 const aiCard = document.createElement('div');
                 const isTargetable = pendingAttackCard !== null;
-                aiCard.className = `bg-slate-950/90 backdrop-blur border ${isTargetable ? 'border-red-500 shadow-red-500/30 target-selectable animate-glow' : (state.turnIndex === idx + 1 ? 'border-amber-500/70 shadow-amber-500/20 shadow-lg' : 'border-slate-800')} rounded-2xl p-2.5 flex flex-col justify-between`;
+                aiCard.className = `bg-slate-950/90 backdrop-blur border ${isTargetable ? 'border-red-500 animate-target-glow target-selectable' : (state.turnIndex === idx + 1 ? 'border-amber-500/70 shadow-amber-500/20 shadow-lg' : 'border-slate-800')} rounded-2xl p-2.5 flex flex-col justify-between`;
                 
                 if (isTargetable) {
                     aiCard.onclick = () => executeSoloAttackOnTarget(ai.id);
@@ -587,15 +598,15 @@
 
                 aiCard.innerHTML = `
                     <div class="flex justify-between items-center mb-1.5">
-                        <span class="text-xs font-black ${isTargetable ? 'text-red-300 underline' : 'text-slate-300'} truncate max-w-[120px]">${isTargetable ? '🎯 Cible : ' : ''}${ai.name}</span>
+                        <span class="text-xs font-black ${isTargetable ? 'text-red-300' : 'text-slate-300'} truncate max-w-[120px]">${isTargetable ? '🎯 ' : ''}${ai.name}</span>
                         <span class="text-xs font-black text-emerald-400">${formatCurrency(ai.capital)}</span>
                     </div>
                     <div class="flex space-x-2 items-center">
-                        <div class="flex-1 bg-slate-900/80 border border-slate-800/80 rounded-xl p-1 h-16 overflow-y-auto scrollbar-thin flex flex-col space-y-0.5" id="ai-stack-${idx}">
+                        <div class="flex-1 bg-slate-900/80 border border-slate-800/80 rounded-xl p-1 h-16 overflow-y-auto scrollbar-thin flex flex-col space-y-0.5">
                             ${ai.assets.length > 0 ? ai.assets.map(a => `<div class="w-full bg-slate-800 rounded px-1.5 py-0.5 text-[9px] flex justify-between text-white"><span>${a.icon} ${a.name}</span><span class="font-mono">${formatCurrency(a.effectiveValue)}</span></div>`).join('') : '<span class="text-[8px] text-slate-500 italic my-auto text-center">Pile vide</span>'}
                         </div>
                         <div class="w-12 h-16 bg-slate-900/80 border border-red-500/20 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                            ${ai.activeTrap ? `<span class="text-xs">${ai.activeTrap.icon}</span><span class="text-[7px] text-red-400 font-bold">-${ai.activeTrap.currentPercent}%</span>` : '<span class="text-[7px] text-slate-500">Pas d\'attaque</span>'}
+                            ${ai.activeTrap ? `<span class="text-xs">${ai.activeTrap.icon}</span><span class="text-[7px] text-red-400 font-bold">-${ai.activeTrap.currentPercent}%</span>` : '<span class="text-[7px] text-slate-500">Aucun</span>'}
                         </div>
                     </div>
                 `;
@@ -609,9 +620,9 @@
                 superContainer.innerHTML = '';
                 me.superCards.forEach(sc => {
                     const el = document.createElement('div');
-                    el.className = "w-12 h-16 bg-gradient-to-br from-amber-600 to-amber-950 border border-amber-300 rounded-xl flex flex-col items-center justify-center text-white shadow-lg p-0.5";
+                    el.className = "w-10 h-14 bg-gradient-to-br from-amber-600 to-amber-950 border border-amber-300 rounded-xl flex flex-col items-center justify-center text-white shadow-lg p-0.5";
                     el.title = `${sc.name} (Bouclier Permanent Actif)`;
-                    el.innerHTML = `<span class="text-base">${sc.icon}</span><span class="text-[7px] font-bold text-amber-100 text-center leading-tight">Actif</span>`;
+                    el.innerHTML = `<span class="text-sm">${sc.icon}</span><span class="text-[6px] font-bold text-amber-100 text-center leading-tight">Actif</span>`;
                     superContainer.appendChild(el);
                 });
             } else {
@@ -619,14 +630,6 @@
             }
 
             renderHand(me.hand, isMyTurn && me.hasDrawnThisTurn && pendingAttackCard === null);
-
-            const banner = document.getElementById('target-selection-banner');
-            if (pendingAttackCard) {
-                banner.classList.remove('hidden');
-                document.getElementById('target-banner-text').textContent = `🎯 Attaque [${pendingAttackCard.name}] : Cliquez sur l'adversaire cible ci-dessus !`;
-            } else {
-                banner.classList.add('hidden');
-            }
 
             if (me.capital >= TARGET_CAPITAL) {
                 showGameOverModal(true, me.name);
@@ -720,23 +723,6 @@
                 advanceSoloTurn();
             } else {
                 onlinePlayCard(uid);
-            }
-        }
-
-        window.cancelAttackTargetSelection = function() {
-            if (pendingAttackCard) {
-                if (isSoloMode) {
-                    soloState.player.hand.push(pendingAttackCard);
-                    pendingAttackCard = null;
-                    renderSoloState();
-                } else {
-                    const myUid = currentUser?.uid;
-                    if (currentRoomState && currentRoomState.players[myUid]) {
-                        currentRoomState.players[myUid].hand.push(pendingAttackCard);
-                        pendingAttackCard = null;
-                        renderOnlineGameState(currentRoomState);
-                    }
-                }
             }
         }
 
@@ -936,14 +922,14 @@
             if (assetsList && assetsList.length > 0) {
                 container.innerHTML = '';
                 assetsList.forEach(ast => {
-                    const mathHtml = ast.penalized ? `<span style="font-size: 13px; font-weight: 900; color: #f87171;" class="font-mono">${formatCurrency(ast.effectiveValue)}</span>` : `<span class="text-white font-mono">${formatCurrency(ast.effectiveValue)}</span>`;
+                    const mathHtml = ast.penalized ? `<span style="font-size: 12px; font-weight: 900; color: #f87171;" class="font-mono">${formatCurrency(ast.effectiveValue)}</span>` : `<span class="text-white font-mono">${formatCurrency(ast.effectiveValue)}</span>`;
                     const div = document.createElement('div');
-                    div.className = `w-full h-7 bg-gradient-to-r ${ast.color || SHADE_LIVRET_1} border rounded-lg flex items-center justify-between px-2 text-[10px] font-bold text-white shadow stacked-card my-0.5 flex-shrink-0`;
+                    div.className = `w-full h-7 bg-gradient-to-r ${ast.color || SHADE_LIVRET_1} border rounded-lg flex items-center justify-between px-2.5 text-[11px] font-bold text-white shadow stacked-card my-0.5 flex-shrink-0`;
                     div.innerHTML = `<span>${ast.icon} ${ast.name}</span><span>${mathHtml}</span>`;
                     container.appendChild(div);
                 });
             } else {
-                container.innerHTML = '<span class="text-[9px] text-slate-500 italic my-auto text-center">Pile vide</span>';
+                container.innerHTML = '<span class="text-[10px] text-slate-500 italic my-auto text-center">Pile vide</span>';
             }
         }
 
@@ -958,7 +944,7 @@
                 const angle = totalCards > 1 ? (idx - (totalCards - 1) / 2) * 4 : 0;
                 const translateY = Math.abs(idx - (totalCards - 1) / 2) * 2;
 
-                cardEl.className = `w-[90px] h-[130px] rounded-2xl cursor-pointer fan-card shadow-xl relative select-none flex-shrink-0`;
+                cardEl.className = `w-[88px] h-[124px] rounded-2xl cursor-pointer fan-card shadow-xl relative select-none flex-shrink-0`;
                 cardEl.style.transform = `rotate(${angle}deg) translateY(${translateY}px)`;
                 if (canPlay) {
                     cardEl.onclick = () => playCard(card.uid);
@@ -976,17 +962,17 @@
                 }
 
                 cardEl.innerHTML = `
-                    <div class="w-full h-full bg-gradient-to-b ${card.color} border rounded-2xl p-2.5 flex flex-col justify-between shadow-xl relative overflow-hidden">
+                    <div class="w-full h-full bg-gradient-to-b ${card.color} border rounded-2xl p-2 flex flex-col justify-between shadow-xl relative overflow-hidden">
                         <div class="flex justify-between items-start">
-                            <span class="text-sm">${card.icon}</span>
+                            <span class="text-xs">${card.icon}</span>
                             ${typeBadge}
                         </div>
                         <div class="my-auto">
-                            <h4 class="font-bold text-[11px] text-white leading-tight">${card.name}</h4>
+                            <h4 class="font-bold text-[10px] text-white leading-tight">${card.name}</h4>
                         </div>
                         <div class="flex justify-between items-center pt-1 border-t border-white/10">
                             <span class="text-[6px] font-bold text-white/50">${card.category}</span>
-                            <span class="text-[6px] text-white/70 italic">${canPlay ? 'Jouer ➔' : 'Piocher d\'abord'}</span>
+                            <span class="text-[6px] text-white/70 italic">${canPlay ? 'Jouer ➔' : 'Pioche'}</span>
                         </div>
                     </div>
                 `;
@@ -994,7 +980,6 @@
             });
         }
 
-        // ONLINE MULTIPLAYER (Up to 4 players)
         window.hostNewGame = async function() {
             isSoloMode = false;
             const nameInput = document.getElementById('player-name-input').value.trim();
@@ -1174,7 +1159,7 @@
                     deckClick.classList.remove('opacity-50');
                     discardTurnBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 } else if (pendingAttackCard) {
-                    badge.textContent = "Sélectionnez le joueur cible de votre attaque !";
+                    badge.textContent = "Ciblez un adversaire (clignotement rouge ci-dessus) !";
                     badge.className = "px-4 py-1.5 bg-red-500/20 border border-red-500 text-red-300 font-bold text-xs rounded-full animate-glow text-center mb-1";
                     drawBtn.classList.add('opacity-50', 'cursor-not-allowed');
                     deckClick.classList.add('opacity-50');
@@ -1198,13 +1183,12 @@
             const pTrapStatus = document.getElementById('player-trap-status');
             if (me.activeTrap) {
                 pTrapStatus.textContent = `${me.activeTrap.name} (-${me.activeTrap.currentPercent}%)`;
-                pTrapSlot.innerHTML = `<div class="w-12 h-16 bg-gradient-to-br from-red-950 to-slate-950 border border-red-500 rounded-lg flex flex-col items-center justify-center text-white shadow animate-pulse p-0.5"><span class="text-sm">${me.activeTrap.icon}</span><span class="text-[8px] font-bold">-${me.activeTrap.currentPercent}%</span></div>`;
+                pTrapSlot.innerHTML = `<div class="w-10 h-14 bg-gradient-to-br from-red-950 to-slate-950 border border-red-500 rounded-lg flex flex-col items-center justify-center text-white shadow animate-pulse p-0.5"><span class="text-xs">${me.activeTrap.icon}</span><span class="text-[7px] font-bold">-${me.activeTrap.currentPercent}%</span></div>`;
             } else {
-                pTrapStatus.textContent = "Voie libre / Aucun piège";
-                pTrapSlot.innerHTML = `<span class="text-[10px] text-slate-500 italic">Aucune attaque</span>`;
+                pTrapStatus.textContent = "Voie libre";
+                pTrapSlot.innerHTML = `<span class="text-[9px] text-slate-500 italic">Aucune</span>`;
             }
 
-            // Render opponents grid dynamically
             const opponentsContainer = document.getElementById('opponents-container');
             opponentsContainer.innerHTML = '';
             
@@ -1217,7 +1201,7 @@
                 const isOpponentTurn = (activePlayerUid === pId);
 
                 const oppCard = document.createElement('div');
-                oppCard.className = `bg-slate-950/90 backdrop-blur border ${isTargetable ? 'border-red-500 shadow-red-500/30 target-selectable animate-glow' : (isOpponentTurn ? 'border-amber-500/70 shadow-amber-500/20 shadow-lg' : 'border-slate-800')} rounded-2xl p-2.5 flex flex-col justify-between`;
+                oppCard.className = `bg-slate-950/90 backdrop-blur border ${isTargetable ? 'border-red-500 animate-target-glow target-selectable' : (isOpponentTurn ? 'border-amber-500/70 shadow-amber-500/20 shadow-lg' : 'border-slate-800')} rounded-2xl p-2.5 flex flex-col justify-between`;
                 
                 if (isTargetable) {
                     oppCard.onclick = () => onlineExecuteAttackOnTarget(pId);
@@ -1225,7 +1209,7 @@
 
                 oppCard.innerHTML = `
                     <div class="flex justify-between items-center mb-1.5">
-                        <span class="text-xs font-black ${isTargetable ? 'text-red-300 underline' : 'text-slate-300'} truncate max-w-[120px]">${isTargetable ? '🎯 Cible : ' : ''}${opp.name}</span>
+                        <span class="text-xs font-black ${isTargetable ? 'text-red-300' : 'text-slate-300'} truncate max-w-[120px]">${isTargetable ? '🎯 ' : ''}${opp.name}</span>
                         <span class="text-xs font-black text-emerald-400">${formatCurrency(opp.capital)}</span>
                     </div>
                     <div class="flex space-x-2 items-center">
@@ -1233,7 +1217,7 @@
                             ${opp.assets.length > 0 ? opp.assets.map(a => `<div class="w-full bg-slate-800 rounded px-1.5 py-0.5 text-[9px] flex justify-between text-white"><span>${a.icon} ${a.name}</span><span class="font-mono">${formatCurrency(a.effectiveValue)}</span></div>`).join('') : '<span class="text-[8px] text-slate-500 italic my-auto text-center">Pile vide</span>'}
                         </div>
                         <div class="w-12 h-16 bg-slate-900/80 border border-red-500/20 rounded-xl p-1 flex flex-col items-center justify-center text-center">
-                            ${opp.activeTrap ? `<span class="text-xs">${opp.activeTrap.icon}</span><span class="text-[7px] text-red-400 font-bold">-${opp.activeTrap.currentPercent}%</span>` : '<span class="text-[7px] text-slate-500">Pas d\'attaque</span>'}
+                            ${opp.activeTrap ? `<span class="text-xs">${opp.activeTrap.icon}</span><span class="text-[7px] text-red-400 font-bold">-${opp.activeTrap.currentPercent}%</span>` : '<span class="text-[7px] text-slate-500">Aucun</span>'}
                         </div>
                     </div>
                 `;
@@ -1247,8 +1231,8 @@
                 superContainer.innerHTML = '';
                 me.superCards.forEach(sc => {
                     const el = document.createElement('div');
-                    el.className = "w-12 h-16 bg-gradient-to-br from-amber-600 to-amber-950 border border-amber-300 rounded-xl flex flex-col items-center justify-center text-white shadow-lg p-0.5";
-                    el.innerHTML = `<span class="text-base">${sc.icon}</span><span class="text-[7px] font-bold text-amber-100 text-center leading-tight">Actif</span>`;
+                    el.className = "w-10 h-14 bg-gradient-to-br from-amber-600 to-amber-950 border border-amber-300 rounded-xl flex flex-col items-center justify-center text-white shadow-lg p-0.5";
+                    el.innerHTML = `<span class="text-sm">${sc.icon}</span><span class="text-[6px] font-bold text-amber-100 text-center leading-tight">Actif</span>`;
                     superContainer.appendChild(el);
                 });
             } else {
@@ -1257,15 +1241,6 @@
 
             renderHand(me.hand, isMyTurn && me.hasDrawnThisTurn && pendingAttackCard === null);
 
-            const banner = document.getElementById('target-selection-banner');
-            if (pendingAttackCard) {
-                banner.classList.remove('hidden');
-                document.getElementById('target-banner-text').textContent = `🎯 Attaque [${pendingAttackCard.name}] : Cliquez sur le joueur cible ci-dessus !`;
-            } else {
-                banner.classList.add('hidden');
-            }
-
-            // Check win conditions
             if (me.capital >= TARGET_CAPITAL) {
                 showGameOverModal(true, me.name);
             } else {
@@ -1404,7 +1379,6 @@
             currentRoomState.turnIndex++;
             currentRoomState.roundNumber++;
 
-            // Handle compounding traps for next player
             const playerOrder = currentRoomState.playerOrder;
             const nextActiveUid = playerOrder[currentRoomState.turnIndex % playerOrder.length];
             const nextPlayer = currentRoomState.players[nextActiveUid];
