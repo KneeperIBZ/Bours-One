@@ -628,19 +628,171 @@
         box-sizing: border-box !important;
     }
 }
-        /* =====================================================
-   MOBILE — DESCENDRE UNIQUEMENT LE BLOC DE DROITE
-   Attaque + Poubelle + Piocher + Défausser
-   ===================================================== */
+/* =========================================================
+   BOURS'ONE — MOBILE PAYSAGE
+   COLONNE DROITE PROPRE ET UNIFORME
+   ========================================================= */
 
 @media (orientation: landscape) and (max-height: 650px) {
 
-    /* Bloc complet situé à droite du portefeuille */
+    /* -----------------------------------------
+       1. BLOC DROIT : ATTAQUE + POUBELLE
+       ----------------------------------------- */
+
     main > section > .flex.justify-between.items-center.w-full
         > .flex.flex-col.items-center.space-y-1 {
 
         position: relative !important;
-        top: 50px !important;
+
+        /* descend toute la colonne */
+        top: 80px !important;
+
+        /* espace régulier entre les éléments */
+        gap: 10px !important;
+
+        width: 27% !important;
+        min-width: 250px !important;
+
+        align-items: center !important;
+    }
+
+
+    /* -----------------------------------------
+       2. ATTAQUE ACTIVE
+       ----------------------------------------- */
+
+    main > section > .flex.justify-between.items-center.w-full
+        > .flex.flex-col.items-center.space-y-1
+        > div:first-child {
+
+        width: 100% !important;
+
+        height: 115px !important;
+        min-height: 115px !important;
+
+        padding: 8px !important;
+
+        box-sizing: border-box !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+
+        border-radius: 16px !important;
+    }
+
+
+    #player-trap-slot {
+        flex: 1 !important;
+
+        min-height: 35px !important;
+        max-height: 45px !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+
+    #player-trap-status {
+        font-size: 9px !important;
+        text-align: center !important;
+    }
+
+
+    /* -----------------------------------------
+       3. CONTENEUR POUBELLE
+       ----------------------------------------- */
+
+    main > section > .flex.justify-between.items-center.w-full
+        > .flex.flex-col.items-center.space-y-1
+        > div:last-child {
+
+        width: 100% !important;
+
+        display: flex !important;
+        flex-direction: row !important;
+
+        justify-content: center !important;
+        align-items: center !important;
+
+        gap: 10px !important;
+
+        padding: 0 !important;
+
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+
+    /* -----------------------------------------
+       4. POUBELLE
+       ----------------------------------------- */
+
+    #deck-draw-click + div {
+
+        width: 65px !important;
+        height: 65px !important;
+
+        flex-shrink: 0 !important;
+
+        border-radius: 14px !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+
+    /* -----------------------------------------
+       5. CACHER LA PIOCHE DU MILIEU
+       ----------------------------------------- */
+
+    #deck-draw-click {
+        display: none !important;
+    }
+
+
+    /* -----------------------------------------
+       6. BOUTONS PIOCHER / DÉFAUSSER
+       ----------------------------------------- */
+
+    #draw-btn,
+    #discard-turn-btn {
+
+        position: relative !important;
+
+        min-height: 30px !important;
+        height: 30px !important;
+
+        padding: 5px 12px !important;
+
+        font-size: 9px !important;
+
+        border-radius: 9px !important;
+
+        white-space: nowrap !important;
+    }
+
+
+    /* -----------------------------------------
+       7. ON GARDE LES BOUTONS ENSEMBLE
+       ----------------------------------------- */
+
+    main > section > .flex.flex-col.items-center.z-20
+        > .w-full.max-w-5xl
+        > div:last-child {
+
+        display: flex !important;
+
+        flex-direction: row !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        gap: 8px !important;
     }
 }
 </style>
