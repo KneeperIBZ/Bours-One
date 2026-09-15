@@ -810,6 +810,19 @@ main > section > .flex.justify-between.items-center.w-full
     position: relative !important;
     z-index: 100 !important;
 }
+        /* ===== BOUTON PIOCHER : CACHÉ À L'ACCUEIL ===== */
+
+/* Écran d'accueil visible = bouton caché */
+body:has(#setup-screen:not(.hidden)) #draw-btn {
+    display: none !important;
+}
+
+/* En partie = bouton visible */
+body:has(#setup-screen.hidden) #draw-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
 </style>
     <meta name="google-adsense-account" content="ca-pub-4699930938210923">
 </head>
