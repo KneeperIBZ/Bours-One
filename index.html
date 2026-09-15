@@ -982,58 +982,129 @@
         }
 
         window.hostNewGame = async function() {
-            isSoloMode = false;
-            const nameInput = document.getElementById('player-name-input').value.trim();
-            const playerName = nameInput || "Hôte";
-            const roomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-            
-            currentRoomCode = roomCode;
-            isHost = true;
-            const myUid = currentUser?.uid || 'host_' + Math.random().toString(36).substr(2, 5);
+    try {
+        isSoloMode = false;
 
-            const initialDeck = generateDeck();
-            const p1Hand = [];
-            for(let i=0; i<5; i++) {
-                if(initialDeck.length > 0) p1Hand.push(initialDeck.pop());
+        // Récupération du pseudo
+        const input = document.getElementById('player-name-input');
+        const playerName = (input ? input.value.trim() : '') || "Hôte";
+
+        // Création du code du salon
+        const roomCode = Math.random()
+            .toString(36)
+            .substring(2, 8)
+            .toUpperCase();
+
+        currentRoomCode = roomCode;
+        isHost = true;
+
+        // Récupération de l'utilisateur Firebase
+        // Si Firebase n'est pas encore prêt, on utilise un identifiant temporaire
+        const myUid =
+            (typeof currentUser !== 'undefined' && currentUser?.uid)
+                ? currentUser.uid
+                : 'host_' + Math.random().toString(36).substring(2, 10);
+
+        // Création du paquet
+        const initialDeck = generateDeck();
+        const p1Hand = [];
+
+        for (let i = 0; i < 5; i++) {
+            if (initialDeck.length > 0) {
+                p1Hand.push(initialDeck.pop());
             }
-
-            const roomData = {
-                roomCode: roomCode,
-                status: 'waiting',
-                objective: TARGET_CAPITAL,
-                hostUid: myUid,
-                playerOrder: [myUid],
-                deck: initialDeck,
-                discardPile: [],
-                turnIndex: 0,
-                roundNumber: 1,
-                players: {
-                    [myUid]: {
-                        uid: myUid,
-                        name: playerName,
-                        capital: 0,
-                        assets: [],
-                        hand: p1Hand,
-                        superCards: [],
-                        activeTrap: null,
-                        hasDrawnThisTurn: false
-                    }
-                }
-            };
-
-            if (db) {
-                const roomRef = doc(db, 'artifacts', appId, 'rooms', roomCode);
-                await setDoc(roomRef, roomData);
-            }
-
-            document.getElementById('setup-screen').classList.add('hidden');
-            document.getElementById('waiting-screen').classList.remove('hidden');
-            document.getElementById('display-room-code').textContent = roomCode;
-            document.getElementById('header-mode-indicator').textContent = "Salon: " + roomCode;
-            document.getElementById('room-players-list').innerHTML = `<div class="text-emerald-400 font-bold mb-1">✓ ${playerName} (Hôte)</div><div class="text-slate-500 italic">En attente de joueurs (1 / 4 max)...</div>`;
-            
-            if (db) listenToRoom(roomCode);
         }
+
+        // Données du salon
+        const roomData = {
+            roomCode: roomCode,
+            status: 'waiting',
+            objective: TARGET_CAPITAL,
+            hostUid: myUid,
+            playerOrder: [myUid],
+            deck: initialDeck,
+            discardPile: [],
+            turnIndex: 0,
+            roundNumber: 1,
+
+            players: {
+                [myUid]: {
+                    uid: myUid,
+                    name: playerName,
+                    capital: 0,
+                    assets: [],
+                    hand: p1Hand,
+                    superCards: [],
+                    activeTrap: null,
+                    hasDrawnThisTurn: false
+                }
+            }
+        };
+
+        // Vérification Firebase
+        if (!db) {
+            throw new Error("Firebase n'est pas disponible.");
+        }
+
+        // Création du salon dans Firestore
+        const roomRef = doc(
+            db,
+            'artifacts',
+            appId,
+            'rooms',
+            roomCode
+        );
+
+        await setDoc(roomRef, roomData);
+
+        // Affichage de l'écran d'attente
+        const setupScreen = document.getElementById('setup-screen');
+        const waitingScreen = document.getElementById('waiting-screen');
+        const roomCodeDisplay = document.getElementById('display-room-code');
+        const headerMode = document.getElementById('header-mode-indicator');
+        const playersList = document.getElementById('room-players-list');
+
+        if (setupScreen) {
+            setupScreen.classList.add('hidden');
+        }
+
+        if (waitingScreen) {
+            waitingScreen.classList.remove('hidden');
+        }
+
+        if (roomCodeDisplay) {
+            roomCodeDisplay.textContent = roomCode;
+        }
+
+        if (headerMode) {
+            headerMode.textContent = "Salon: " + roomCode;
+        }
+
+        if (playersList) {
+            playersList.innerHTML =
+                `<div class="text-emerald-400 font-bold mb-1">
+                    ✓ ${playerName} (Hôte)
+                </div>
+                <div class="text-slate-500 italic">
+                    En attente de joueurs (1 / 4 max)...
+                </div>`;
+        }
+
+        // Écoute des changements du salon
+        listenToRoom(roomCode);
+
+    } catch (error) {
+
+        console.error(
+            "Erreur lors de la création du salon :",
+            error
+        );
+
+        alert(
+            "Impossible de créer le salon. Vérifie ta connexion puis réessaie."
+        );
+    }
+};
 
         window.joinGameRoom = async function() {
             isSoloMode = false;
