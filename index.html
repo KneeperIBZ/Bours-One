@@ -645,7 +645,7 @@
         position: relative !important;
 
         /* descend toute la colonne */
-        top: 0px !important;
+        top: 90px !important;
 
         /* espace régulier entre les éléments */
         gap: 10px !important;
@@ -794,35 +794,43 @@ main > section > .flex.justify-between.items-center.w-full
         gap: 8px !important;
     }
 }
-        /* ===== CORRECTION PIOCHE ===== */
-#deck-draw-click {
-    display: flex !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    position: relative !important;
-    z-index: 100 !important;
-}
-
-#draw-btn {
-    display: inline-flex !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    position: relative !important;
-    z-index: 100 !important;
-}
-        /* ===== BOUTON PIOCHER : CACHÉ À L'ACCUEIL ===== */
-
-/* Écran d'accueil visible = bouton caché */
-body:has(#setup-screen:not(.hidden)) #draw-btn {
-    display: none !important;
-}
-
-/* En partie = bouton visible */
-body:has(#setup-screen.hidden) #draw-btn {
-    display: inline-flex !important;
+        /* ===== CARTE D'ATTAQUE JUSTE À GAUCHE DES CARTES EN MAIN ===== */
+#player-trap-slot.player-trap-card {
+    order: unset !important;
+    width: 42px !important;
+    height: 58px !important;
+    min-width: 42px !important;
+    flex: 0 0 42px !important;
+    margin: 0 6px 0 0 !important;
     align-items: center !important;
     justify-content: center !important;
 }
+
+#player-hand {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+
+
+/* ===== MONTER UNIQUEMENT PIOCHE + POUBELLE + DEFAUSSER ===== */
+.mobile-deck-actions {
+    position: static !important;
+    top: auto !important;
+    transform: none !important;
+}
+
+#deck-draw-click,
+.mobile-deck-actions > div:not(#player-trap-slot),
+#draw-btn,
+#discard-turn-btn {
+    position: relative !important;
+    top: -32px !important;
+}
+
+#deck-draw-click {
+    display: flex !important;
+}
+
 </style>
     <meta name="google-adsense-account" content="ca-pub-4699930938210923">
 </head>
@@ -982,13 +990,6 @@ body:has(#setup-screen.hidden) #draw-btn {
                 </div>
 
                 <div class="flex flex-col items-center space-y-1">
-                    <div class="bg-slate-950/95 backdrop-blur border border-red-500/30 p-2 rounded-2xl shadow-lg w-40 text-center flex flex-col items-center">
-                        <span class="text-[9px] uppercase font-bold text-red-400 mb-0.5 tracking-wider">🚨 Attaque Active</span>
-                        <div id="player-trap-slot" class="w-full min-h-[35px] flex items-center justify-center space-x-1 overflow-x-auto">
-                            <span class="text-[9px] text-slate-500 italic">Aucune attaque</span>
-                        </div>
-                        <span id="player-trap-status" class="text-[8px] text-slate-400 font-semibold truncate w-full">Voie libre</span>
-                    </div>
 
 <!-- DECK + POUBELLE + BOUTONS D'ACTION -->
 <div class="mobile-deck-actions">
@@ -1044,7 +1045,9 @@ body:has(#setup-screen.hidden) #draw-btn {
                     </div>
                 </div>
 
-                <div class="w-full max-w-5xl relative flex justify-center px-2">
+                <div class="w-full max-w-5xl relative flex items-center justify-center px-2">
+                    <!-- Carte d'attaque reçue : juste à gauche de la main -->
+                    <div id="player-trap-slot" class="player-trap-card" style="display:none;"></div>
                     <div id="player-hand" class="card-container w-full"></div>
                 </div>
             </div>
@@ -1382,13 +1385,12 @@ body:has(#setup-screen.hidden) #draw-btn {
             }
 
             const pTrapSlot = document.getElementById('player-trap-slot');
-            const pTrapStatus = document.getElementById('player-trap-status');
             if (me.activeTrap) {
-                pTrapStatus.textContent = `${me.activeTrap.name} (-${me.activeTrap.currentPercent}%)`;
+                pTrapSlot.style.display = 'flex';
                 pTrapSlot.innerHTML = `<div class="w-10 h-14 bg-gradient-to-br from-red-950 to-slate-950 border border-red-500 rounded-lg flex flex-col items-center justify-center text-white shadow animate-pulse p-0.5"><span class="text-xs">${me.activeTrap.icon}</span><span class="text-[7px] font-bold">-${me.activeTrap.currentPercent}%</span></div>`;
             } else {
-                pTrapStatus.textContent = "Voie libre";
-                pTrapSlot.innerHTML = `<span class="text-[9px] text-slate-500 italic">Aucune</span>`;
+                pTrapSlot.style.display = 'none';
+                pTrapSlot.innerHTML = '';
             }
 
             const opponentsContainer = document.getElementById('opponents-container');
@@ -2040,13 +2042,12 @@ body:has(#setup-screen.hidden) #draw-btn {
             }
 
             const pTrapSlot = document.getElementById('player-trap-slot');
-            const pTrapStatus = document.getElementById('player-trap-status');
             if (me.activeTrap) {
-                pTrapStatus.textContent = `${me.activeTrap.name} (-${me.activeTrap.currentPercent}%)`;
+                pTrapSlot.style.display = 'flex';
                 pTrapSlot.innerHTML = `<div class="w-10 h-14 bg-gradient-to-br from-red-950 to-slate-950 border border-red-500 rounded-lg flex flex-col items-center justify-center text-white shadow animate-pulse p-0.5"><span class="text-xs">${me.activeTrap.icon}</span><span class="text-[7px] font-bold">-${me.activeTrap.currentPercent}%</span></div>`;
             } else {
-                pTrapStatus.textContent = "Voie libre";
-                pTrapSlot.innerHTML = `<span class="text-[9px] text-slate-500 italic">Aucune</span>`;
+                pTrapSlot.style.display = 'none';
+                pTrapSlot.innerHTML = '';
             }
 
             const opponentsContainer = document.getElementById('opponents-container');
@@ -2309,3 +2310,24 @@ body:has(#setup-screen.hidden) #draw-btn {
     </script>
 </body>
 </html>
+
+<style>
+/* Monter uniquement Poubelle + Piocher + Défausser */
+.mobile-deck-actions { transform: none !important; }
+
+.mobile-deck-actions #deck-draw-click + div,
+.mobile-deck-actions #draw-btn,
+.mobile-deck-actions #discard-turn-btn {
+    position: relative !important;
+    top: -90px !important;
+    transform: none !important;
+}
+
+</style>
+
+<style>
+/* Supprime complètement l'élément PIOCHE visible */
+.mobile-deck-actions #deck-draw-click {
+    display: none !important;
+}
+</style>
