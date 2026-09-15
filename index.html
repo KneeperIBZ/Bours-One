@@ -968,17 +968,44 @@ main > section > .flex.justify-between.items-center.w-full
                         <span id="player-trap-status" class="text-[8px] text-slate-400 font-semibold truncate w-full">Voie libre</span>
                     </div>
 
-                    <!-- Compacted Discard & Deck Pile (Moved to right side) -->
-                    <div class="flex items-center space-x-2 bg-slate-950/90 backdrop-blur px-3 py-2 rounded-2xl border border-emerald-500/20 shadow-xl">
-                        <div onclick="playerDrawCardManual()" id="deck-draw-click" class="w-12 h-16 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 border border-emerald-500/40 rounded-xl shadow cursor-pointer flex flex-col items-center justify-center hover:scale-105 transition group relative">
-                            <span class="text-[8px] text-emerald-400 font-black group-hover:text-emerald-300">PIOCHE</span>
-                            <span id="deck-count" class="text-[10px] text-white font-mono font-bold">∞</span>
-                        </div>
-                        <div onclick="toggleDiscardModal()" class="w-12 h-16 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow cursor-pointer flex flex-col items-center justify-center hover:border-slate-500 transition relative">
-                            <span class="text-[8px] text-slate-400 font-bold">POUBELLE</span>
-                            <span id="discard-count" class="text-[10px] text-slate-200 font-mono font-bold" id="discard-count">0</span>
-                        </div>
-                    </div>
+<!-- DECK + POUBELLE + BOUTONS D'ACTION -->
+<div class="mobile-deck-actions">
+
+    <!-- PIOCHE -->
+    <div onclick="playerDrawCardManual()" id="deck-draw-click"
+         class="w-12 h-16 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 border border-emerald-500/40 rounded-xl shadow cursor-pointer flex flex-col items-center justify-center hover:scale-105 transition group relative">
+        <span class="text-[8px] text-emerald-400 font-black group-hover:text-emerald-300">
+            PIOCHE
+        </span>
+        <span id="deck-count" class="text-[10px] text-white font-mono font-bold">∞</span>
+    </div>
+
+    <!-- POUBELLE -->
+    <div onclick="toggleDiscardModal()"
+         class="w-12 h-16 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow cursor-pointer flex flex-col items-center justify-center hover:border-slate-500 transition relative">
+        <span class="text-[8px] text-slate-400 font-bold">
+            POUBELLE
+        </span>
+        <span id="discard-count" class="text-[10px] text-slate-200 font-mono font-bold">
+            0
+        </span>
+    </div>
+
+    <!-- BOUTON PIOCHER -->
+    <button onclick="playerDrawCardManual()"
+            id="draw-btn"
+            class="px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl text-xs shadow transition">
+        Piocher 📥
+    </button>
+
+    <!-- BOUTON DÉFAUSSER -->
+    <button onclick="openDiscardFromHandModal()"
+            id="discard-turn-btn"
+            class="px-3.5 py-2 bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 font-bold rounded-xl text-xs shadow transition border border-amber-500/30 opacity-50 cursor-not-allowed">
+        Défausser 🗑️
+    </button>
+
+</div>
                 </div>
             </div>
 
