@@ -68,7 +68,7 @@
             <div class="space-y-4 mb-4 text-left">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1 uppercase tracking-wider">Votre Pseudo de Trader :</label>
-                    <input type="text" id="player-name-input" value="Trader" placeholder="Ex: WarrenBuffett99" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 font-medium">
+                    <input type="text" id="player-name-input" value="" placeholder="Ex: WarrenBuffett99" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 font-medium">
                 </div>
 
                 <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 space-y-3">
@@ -494,7 +494,7 @@
 
         window.startSoloGame = function() {
             isSoloMode = true;
-            const name = document.getElementById('player-name-input').value.trim() || "Trader";
+            const name = document.getElementById('player-name-input').value.trim() || "";
             const aiCount = parseInt(document.getElementById('ai-count-select').value) || 3;
 
             document.getElementById('header-objective-tag').textContent = formatCurrency(TARGET_CAPITAL);
