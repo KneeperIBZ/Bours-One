@@ -596,7 +596,38 @@
   #player-hand .fan-card:hover,
   #player-hand .fan-card:active { transform:translateY(-8px) scale(1.03) rotate(0deg) !important; }
 }
+/* =====================================================
+   CORRECTION — Encadrés des IA
+   Remonte les encadrés pour éviter le débordement en bas
+   ===================================================== */
 
+@media (orientation: landscape) and (max-height: 650px) {
+
+    /* Cadres principaux des IA */
+    #opponents-container > div {
+        overflow: hidden !important;
+        padding-bottom: 5px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Encadré "Pile vide" */
+    #opponents-container > div .h-16 {
+        height: 28px !important;
+        min-height: 28px !important;
+        max-height: 28px !important;
+        margin-bottom: 3px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Encadré "Aucun" */
+    #opponents-container > div .w-12 {
+        height: 28px !important;
+        min-height: 28px !important;
+        max-height: 28px !important;
+        margin-bottom: 3px !important;
+        box-sizing: border-box !important;
+    }
+}
 </style>
     <meta name="google-adsense-account" content="ca-pub-4699930938210923">
 </head>
