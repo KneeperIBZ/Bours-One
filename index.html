@@ -628,6 +628,21 @@
         box-sizing: border-box !important;
     }
 }
+        /* =====================================================
+   MOBILE — DESCENDRE UNIQUEMENT LE BLOC DE DROITE
+   Attaque + Poubelle + Piocher + Défausser
+   ===================================================== */
+
+@media (orientation: landscape) and (max-height: 650px) {
+
+    /* Bloc complet situé à droite du portefeuille */
+    main > section > .flex.justify-between.items-center.w-full
+        > .flex.flex-col.items-center.space-y-1 {
+
+        position: relative !important;
+        top: 90px !important;
+    }
+}
 </style>
     <meta name="google-adsense-account" content="ca-pub-4699930938210923">
 </head>
