@@ -262,166 +262,351 @@
 
     </style>
     <meta name="google-adsense-account" content="ca-pub-4699930938210923">
-
-<style id="boursone-iphone-home-fit">
-/* Écran d'accueil iPhone paysage : tout tient dans l'écran sans modifier le jeu */
-@media (orientation: landscape) and (max-height: 600px) {
-  #setup-screen {
-    width: 100vw !important;
-    height: 100vh !important;
-    min-height: 0 !important;
-    padding: 8px 14px !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-  }
-
-  #setup-screen > div {
-    width: min(760px, 96vw) !important;
-    max-width: 96vw !important;
-    max-height: 94vh !important;
-    padding: 12px 18px !important;
-    border-radius: 20px !important;
-    overflow: hidden !important;
-    transform: none !important;
-  }
-
-  #setup-screen .bg-gradient-to-tr {
-    padding: 5px 14px !important;
-    font-size: 18px !important;
-    margin-bottom: 2px !important;
-  }
-
-  #setup-screen h2 {
-    font-size: 9px !important;
-    margin-bottom: 7px !important;
-  }
-
-  #setup-screen #auth-status {
-    margin-bottom: 7px !important;
-    padding: 5px 8px !important;
-    font-size: 8px !important;
-  }
-
-  #setup-screen .space-y-4 {
-    gap: 7px !important;
-    margin-bottom: 7px !important;
-  }
-
-  #setup-screen label {
-    font-size: 8px !important;
-  }
-
-  #setup-screen input[type="text"],
-  #setup-screen select {
-    padding: 6px 9px !important;
-    font-size: 10px !important;
-  }
-
-  #setup-screen .bg-slate-900\/60 {
-    padding: 8px !important;
-  }
-
-  #setup-screen input[type="range"] {
-    height: 5px !important;
-  }
-
-  #setup-screen button {
-    padding-top: 7px !important;
-    padding-bottom: 7px !important;
-    font-size: 9px !important;
-  }
-
-  #setup-screen .border-t {
-    padding-top: 6px !important;
-  }
-
-  #setup-screen .border-t p {
-    font-size: 7px !important;
-    line-height: 1.25 !important;
-  }
-}
-
-@media (orientation: landscape) and (max-height: 430px) {
-  #setup-screen { padding: 4px 10px !important; }
-  #setup-screen > div {
-    max-height: 98vh !important;
-    padding: 7px 14px !important;
-  }
-  #setup-screen .bg-gradient-to-tr { font-size: 15px !important; }
-  #setup-screen h2 { margin-bottom: 4px !important; }
-  #setup-screen #auth-status { margin-bottom: 4px !important; padding: 3px 7px !important; }
-  #setup-screen .space-y-4 { gap: 4px !important; margin-bottom: 4px !important; }
-  #setup-screen .bg-slate-900\/60 { padding: 6px !important; }
-  #setup-screen button { padding-top: 5px !important; padding-bottom: 5px !important; }
-  #setup-screen .border-t { padding-top: 4px !important; }
-  #setup-screen .border-t p { font-size: 6px !important; }
-}
-</style>
 </head>
 <body class="bg-[#030605] text-slate-100 h-full flex flex-col overflow-hidden select-none">
 
-    <div id="setup-screen" class="fixed inset-0 bg-[#030605]/98 backdrop-blur-2xl z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-950 border border-emerald-500/35 rounded-3xl max-w-lg w-full p-8 shadow-2xl text-center relative overflow-hidden">
-            <div class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <style id="boursone-home-design">
+#setup-screen {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        linear-gradient(rgba(0,18,25,.88),rgba(0,18,25,.94)),
+        repeating-linear-gradient(90deg,transparent 0,transparent 79px,rgba(0,255,230,.045) 80px),
+        repeating-linear-gradient(0deg,transparent 0,transparent 79px,rgba(0,255,230,.045) 80px);
+    font-family:'Inter',sans-serif;
+    box-sizing:border-box;
+}
+.boursone-home {
+    width:min(94vw,1580px);
+    height:min(94vh,900px);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:24px;
+    box-sizing:border-box;
+}
+.boursone-logo {
+    width:fit-content;
+    min-width:520px;
+    margin:0 auto;
+    padding:12px 70px 18px;
+    text-align:center;
+    border-radius:90px;
+    background:linear-gradient(135deg,#25dfc4,#0fcfb8);
+    box-shadow:0 0 30px rgba(0,255,220,.35),inset 0 1px 0 rgba(255,255,255,.35);
+    color:white;
+}
+.boursone-logo-title {
+    font-size:clamp(42px,4vw,76px);
+    line-height:.95;
+    font-weight:900;
+    letter-spacing:-3px;
+}
+.boursone-logo-subtitle {
+    margin-top:7px;
+    font-size:clamp(17px,1.5vw,28px);
+    font-weight:600;
+}
+.boursone-main-title {
+    text-align:center;
+    color:white;
+    font-size:clamp(24px,2vw,42px);
+    font-weight:900;
+    letter-spacing:1px;
+    margin:0;
+}
+.boursone-banner {
+    width:100%;
+    min-height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:2px solid #00e7d2;
+    border-radius:25px;
+    color:#00e7d2;
+    font-size:clamp(20px,1.7vw,34px);
+    font-weight:900;
+    background:rgba(0,35,43,.55);
+}
+.boursone-banner span { margin-right:18px; font-size:1.15em; }
+.boursone-columns {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:26px;
+    min-height:0;
+}
+.boursone-panel {
+    background:linear-gradient(145deg,rgba(1,28,38,.96),rgba(1,17,27,.96));
+    border:2px solid rgba(0,220,205,.32);
+    border-radius:28px;
+    padding:30px;
+    box-sizing:border-box;
+    box-shadow:inset 0 0 30px rgba(0,180,170,.025);
+}
+.boursone-panel-title {
+    display:flex;
+    align-items:center;
+    gap:16px;
+    color:white;
+    font-size:clamp(24px,2vw,36px);
+    font-weight:900;
+    margin-bottom:30px;
+}
+.boursone-panel-icon { font-size:1.15em; }
+#player-name-input {
+    width:100%;
+    box-sizing:border-box;
+    padding:22px 24px;
+    border-radius:22px;
+    border:2px solid #176b99;
+    background:rgba(16,45,66,.85);
+    color:white;
+    font-size:clamp(20px,1.5vw,30px);
+    font-weight:600;
+    outline:none;
+}
+#player-name-input::placeholder { color:#a5bdd0; }
+#player-name-input:focus {
+    border-color:#00dfc8;
+    box-shadow:0 0 0 3px rgba(0,223,200,.12);
+}
+.boursone-salon-buttons {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+    margin-top:28px;
+}
+.boursone-salon-button {
+    min-height:82px;
+    border-radius:22px;
+    border:2px solid #00b9ac;
+    background:rgba(0,40,45,.8);
+    color:#00e1ce;
+    font-size:clamp(17px,1.35vw,26px);
+    font-weight:900;
+    cursor:pointer;
+}
+.boursone-salon-button.primary {
+    background:linear-gradient(135deg,#16ddc3,#08cdb7);
+    color:white;
+    border-color:transparent;
+    box-shadow:0 8px 25px rgba(0,220,190,.22);
+}
+.boursone-objective-row {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:white;
+    font-size:clamp(19px,1.4vw,28px);
+    font-weight:800;
+    margin-bottom:10px;
+}
+#objective-value {
+    color:#00e0cc;
+    font-size:1.25em;
+    font-weight:900;
+}
+#objective-slider {
+    width:100%;
+    height:14px;
+    accent-color:#00dcca;
+    cursor:pointer;
+}
+.boursone-slider-values {
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    font-size:clamp(15px,1.1vw,22px);
+    font-weight:600;
+    margin-top:8px;
+}
+.boursone-ai-title {
+    color:white;
+    font-size:clamp(19px,1.4vw,28px);
+    font-weight:800;
+    margin-top:30px;
+    margin-bottom:18px;
+}
+.boursone-ai-buttons {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+.boursone-ai-button {
+    min-height:65px;
+    border-radius:20px;
+    border:2px solid #008f8c;
+    background:rgba(0,45,48,.75);
+    color:white;
+    font-size:clamp(17px,1.2vw,24px);
+    font-weight:800;
+    cursor:pointer;
+}
+.boursone-ai-button.active {
+    background:linear-gradient(135deg,#17dbc0,#0ac8b4);
+    border-color:transparent;
+    box-shadow:0 5px 20px rgba(0,220,190,.2);
+}
+#solo-start-button {
+    width:100%;
+    min-height:82px;
+    margin-top:20px;
+    border:none;
+    border-radius:23px;
+    background:linear-gradient(135deg,#17dbc0,#08cbb6);
+    color:white;
+    font-size:clamp(20px,1.55vw,31px);
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,220,190,.2);
+}
+#solo-start-button:active { transform:scale(.98); }
 
-            <div class="bg-gradient-to-tr from-emerald-600 via-teal-600 to-emerald-500 text-white font-black px-6 py-2.5 rounded-2xl text-2xl tracking-wider shadow-lg inline-block mb-2">
-                Bours'One
-            </div>
-            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Le Jeu de Stratégie Financière & Boursière</h2>
-            
-            <div id="auth-status" class="mb-4 text-[10px] text-emerald-400 font-mono bg-slate-900/90 p-2.5 rounded-xl border border-emerald-500/20 shadow-inner">
-                Initialisation du système sécurisé...
-            </div>
+@media (max-width:900px) {
+    .boursone-home { width:96vw; height:96vh; gap:12px; }
+    .boursone-logo { min-width:0; padding:10px 35px 14px; }
+    .boursone-columns { gap:12px; }
+    .boursone-panel { padding:18px; border-radius:20px; }
+    .boursone-panel-title { margin-bottom:18px; }
+    .boursone-salon-buttons { gap:10px; margin-top:15px; }
+    .boursone-salon-button { min-height:58px; }
+    .boursone-ai-title { margin-top:15px; margin-bottom:10px; }
+    .boursone-ai-button { min-height:48px; }
+    #solo-start-button { min-height:60px; margin-top:12px; }
+}
 
-            <div class="space-y-4 mb-4 text-left">
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1 uppercase tracking-wider">Votre Pseudo de Trader :</label>
-                    <input type="text" id="player-name-input" value="TraderPro" placeholder="Ex: WarrenBuffett99" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 font-medium">
+@media (orientation:landscape) and (max-height:600px) {
+    .boursone-home { width:96vw; height:96vh; gap:8px; }
+    .boursone-logo { padding:5px 35px 8px; }
+    .boursone-logo-title { font-size:34px; }
+    .boursone-logo-subtitle { font-size:13px; margin-top:2px; }
+    .boursone-main-title { font-size:18px; }
+    .boursone-banner { min-height:38px; font-size:18px; }
+    .boursone-columns { gap:12px; }
+    .boursone-panel { padding:12px 18px; }
+    .boursone-panel-title { font-size:20px; margin-bottom:10px; }
+    #player-name-input { padding:11px 15px; font-size:16px; }
+    .boursone-salon-button { min-height:42px; font-size:15px; }
+    .boursone-objective-row { font-size:16px; }
+    .boursone-slider-values { font-size:12px; }
+    .boursone-ai-title { font-size:16px; margin-top:8px; margin-bottom:6px; }
+    .boursone-ai-button { min-height:38px; font-size:14px; }
+    #solo-start-button { min-height:48px; margin-top:8px; font-size:18px; }
+}
+</style>
+
+<div id="setup-screen">
+    <div class="boursone-home">
+
+        <div class="boursone-logo">
+            <div class="boursone-logo-title">Bours’One</div>
+            <div class="boursone-logo-subtitle">créé par Erwan Troadec</div>
+        </div>
+
+        <h1 class="boursone-main-title">
+            LE JEU DE STRATÉGIE FINANCIÈRE &amp; BOURSIÈRE
+        </h1>
+
+        <div class="boursone-banner">
+            <span>🛡️</span>
+            APPRENEZ LA BOURSE EN JOUANT
+        </div>
+
+        <div class="boursone-columns">
+
+            <div class="boursone-panel">
+                <div class="boursone-panel-title">
+                    <span class="boursone-panel-icon">👤</span>
+                    VOTRE PSEUDO DE TRADER
                 </div>
 
-                <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 space-y-3">
-                    <span class="text-[10px] uppercase font-extrabold text-teal-400 tracking-wider block">Paramètres de Partie</span>
-                    
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <label class="text-[10px] text-slate-400 font-bold">Objectif Capital :</label>
-                            <span id="slider-val-display" class="text-[10px] font-mono text-emerald-400 font-bold">250 000 €</span>
-                        </div>
-                        <input type="range" id="objective-slider" min="100000" max="5000000" step="50000" value="250000" oninput="updateObjectiveSlider(this.value)" class="w-full accent-emerald-500 bg-slate-950 cursor-pointer h-2 rounded-lg">
-                    </div>
+                <input
+                    id="player-name-input"
+                    type="text"
+                    value="TraderPro"
+                    placeholder="Entrez votre pseudo..."
+                    maxlength="20"
+                    autocomplete="off"
+                >
 
-                    <div class="pt-2 border-t border-slate-800">
-                        <label class="block text-[10px] text-slate-400 mb-1 font-bold">Adversaires IA (Mode Solo) :</label>
-                        <select id="ai-count-select" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white font-medium focus:outline-none focus:border-emerald-500 mb-2">
-                            <option value="1">1 Adversaire IA</option>
-                            <option value="2">2 Adversaires IA</option>
-                            <option value="3" selected>3 Adversaires IA</option>
-                        </select>
-                        <button onclick="startSoloGame()" class="w-full py-3 bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-500 hover:from-teal-500 hover:to-emerald-500 text-white font-extrabold rounded-xl shadow-lg transition text-xs tracking-wider">
-                            🤖 Lancer la Partie Solo
-                        </button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2 pt-1">
-                    <button onclick="hostNewGame()" class="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold rounded-xl shadow-lg transition text-xs tracking-wide">
-                        🏠 Créer Salon (1-4 J.)
+                <div class="boursone-salon-buttons">
+                    <button type="button"
+                            class="boursone-salon-button primary"
+                            onclick="hostNewGame()">
+                        🏠 Créer Salon (1 – 4 J.)
                     </button>
-                    <button onclick="showJoinModal()" class="py-2.5 bg-slate-900 hover:bg-slate-800 border border-emerald-500/40 text-emerald-400 font-extrabold rounded-xl shadow transition text-xs tracking-wide">
+
+                    <button type="button"
+                            class="boursone-salon-button"
+                            onclick="showJoinModal()">
                         🚪 Rejoindre Salon
                     </button>
                 </div>
             </div>
 
-            <div class="border-t border-slate-900 pt-3 text-left">
-                <span class="text-[10px] text-slate-500 block mb-1 font-bold uppercase tracking-wider">Caractéristiques Pro :</span>
-                <p class="text-[10px] text-slate-400 leading-relaxed">
-                    Multijoueur en ligne • Ciblez directement les cartes adverses • Pioche et poubelle compactes au centre • Gestion de portefeuille centrale.
-                </p>
+            <div class="boursone-panel">
+                <div class="boursone-panel-title">
+                    <span class="boursone-panel-icon">⚙️</span>
+                    PARAMÈTRES DE PARTIE
+                </div>
+
+                <div class="boursone-objective-row">
+                    <span>Objectif Capital :</span>
+                    <span id="objective-value">250 000 €</span>
+                </div>
+
+                <input
+                    type="range"
+                    id="objective-slider"
+                    min="100000"
+                    max="5000000"
+                    step="50000"
+                    value="250000"
+                    oninput="updateObjectiveSlider(this.value)"
+                >
+
+                <div class="boursone-slider-values">
+                    <span>100 000 €</span>
+                    <span>5 000 000 €</span>
+                </div>
+
+                <div class="boursone-ai-title">
+                    🤖 &nbsp; Adversaires IA (Mode Solo)
+                </div>
+
+                <div class="boursone-ai-buttons">
+                    <button type="button" class="boursone-ai-button"
+                            onclick="selectAiCount(1)">1 IA</button>
+                    <button type="button" class="boursone-ai-button"
+                            onclick="selectAiCount(2)">2 IA</button>
+                    <button type="button" class="boursone-ai-button active"
+                            onclick="selectAiCount(3)">3 IA</button>
+                </div>
+
+                <select id="ai-count-select" style="display:none;">
+                    <option value="1">1 Adversaire IA</option>
+                    <option value="2">2 Adversaires IA</option>
+                    <option value="3" selected>3 Adversaires IA</option>
+                </select>
+
+                <button
+                    id="solo-start-button"
+                    type="button"
+                    onclick="startSoloGame()">
+                    ▶ &nbsp; Lancer la Partie Solo
+                </button>
             </div>
+
         </div>
     </div>
+</div>
 
     <div id="join-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-slate-950 border border-emerald-500/40 rounded-3xl max-w-sm w-full p-6 shadow-2xl relative text-center">
