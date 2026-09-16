@@ -2526,19 +2526,27 @@ main > section > .flex.justify-between.items-center.w-full
     top: 0 !important;
     right: auto !important;
     flex: 0 0 auto !important;
-    margin: 0 0 0 10px !important;
+    margin: 0 0 0 2px !important;
     z-index: 30 !important;
     white-space: nowrap !important;
+    transform: translateX(-18px) scale(1.12) !important;
+    transform-origin: center center !important;
 }
 
 @media (max-width: 900px) {
     #draw-btn.player-draw-button {
-        min-height: 26px !important;
-        height: 26px !important;
-        padding: 3px 6px !important;
-        font-size: 7px !important;
+        min-height: 29px !important;
+        height: 29px !important;
+        padding: 4px 8px !important;
+        font-size: 8px !important;
         border-radius: 7px !important;
-        margin-left: 5px !important;
+        margin-left: 2px !important;
+        transform: translateX(-14px) scale(1.08) !important;
+        transform-origin: center center !important;
     }
 }
+</style>
+
+<style>
+#draw-btn.player-draw-button { left: -50px !important; }
 </style>
