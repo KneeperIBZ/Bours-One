@@ -2498,16 +2498,26 @@ main > section > .flex.justify-between.items-center.w-full
 </style>
 
 
+
+
+
 <style>
-/* POSITION MOBILE — BOUTON PIOCHER */
+/* PIOCHER — même taille et même position que la version web */
 @media (max-width: 900px) {
     #draw-btn.player-draw-button {
         position: relative !important;
-        left: -45px !important;
+        left: auto !important;
         right: auto !important;
-        transform: scale(1.08) !important;
-        margin-left: 0 !important;
-        z-index: 50 !important;
+        top: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        margin: 0 !important;
+        min-height: unset !important;
+        height: auto !important;
+        width: auto !important;
+        padding: revert !important;
+        font-size: revert !important;
+        border-radius: revert !important;
     }
 }
 </style>
