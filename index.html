@@ -105,12 +105,20 @@
     main > section > .flex.justify-between.items-center.w-full > div { min-width: 0 !important; }
 
     #super-cards-container {
-        min-height: 28px !important;
-        max-height: 32px !important;
-        padding: 2px !important;
-        gap: 2px !important;
-        max-width: 24vw !important;
-        overflow: hidden !important;
+        width: 100% !important;
+        height: 38px !important;
+        min-height: 0 !important;
+        max-height: 38px !important;
+        padding: 1px !important;
+        border-radius: 7px !important;
+    }
+    #super-cards-container > div {
+        width: 100% !important;
+        height: 12px !important;
+        min-height: 12px !important;
+        padding: 0 3px !important;
+        font-size: 6px !important;
+        margin: 0 !important;
     }
 
     main > section > .flex.justify-between.items-center.w-full
@@ -206,7 +214,9 @@
     #player-hand { height: 72px !important; min-height: 72px !important; }
     #player-hand .fan-card { width: 50px !important; height: 70px !important; }
     #opponents-container > div .h-16 { height: 24px !important; }
-    #player-asset-stack { height: 32px !important; max-height: 32px !important; }
+    #player-asset-stack,
+    #super-cards-container { height: 32px !important; max-height: 32px !important; }
+    #super-cards-container > div { height: 12px !important; min-height: 12px !important; }
 }
     
 /* BOURS'ONE — COMPACT MOBILE APP */
@@ -254,10 +264,10 @@
   main > section > .flex.justify-between.items-center.w-full { gap:3px !important; padding:0 1px !important; margin:1px 0 !important; min-height:0 !important; }
   main > section > .flex.justify-between.items-center.w-full > .flex.flex-col.items-center.bg-slate-950\/90 { width:34vw !important; max-width:34vw !important; padding:3px !important; border-radius:9px !important; }
   main > section > .flex.justify-between.items-center.w-full > .flex.flex-col.items-center.bg-slate-950\/90 > div:first-child { font-size:7px !important; }
-  #player-asset-stack { height:42px !important; padding:1px !important; border-radius:8px !important; }
-  #player-asset-stack > div { height:13px !important; min-height:13px !important; padding:0 3px !important; font-size:5px !important; }
-  #super-cards-container { max-width:23vw !important; min-height:25px !important; max-height:30px !important; padding:2px !important; gap:2px !important; }
-  #super-cards-container > div { width:22px !important; height:29px !important; }
+  #player-asset-stack,
+  #super-cards-container { width:100% !important; height:42px !important; min-height:0 !important; max-height:none !important; padding:1px !important; border-radius:8px !important; }
+  #player-asset-stack > div,
+  #super-cards-container > div { width:100% !important; height:13px !important; min-height:13px !important; padding:0 3px !important; font-size:5px !important; }
   #super-cards-container + * { min-width:0 !important; }
   main > section > .flex.justify-between.items-center.w-full > .flex.flex-col.items-center.space-y-1 { gap:1px !important; }
   main > section > .flex.justify-between.items-center.w-full > .flex.flex-col.items-center.space-y-1 > div:first-child { width:23vw !important; padding:3px !important; border-radius:8px !important; }
@@ -291,8 +301,10 @@
   #opponents-container > div .h-16 { height:24px !important; }
   #opponents-container > div .w-12 { width:22px !important; height:24px !important; }
   main > section > .flex.justify-between.items-center.w-full { margin:0 !important; }
-  #player-asset-stack { height:35px !important; }
-  #player-asset-stack > div { height:11px !important; min-height:11px !important; font-size:5px !important; }
+  #player-asset-stack,
+  #super-cards-container { height:35px !important; max-height:35px !important; }
+  #player-asset-stack > div,
+  #super-cards-container > div { height:11px !important; min-height:11px !important; font-size:5px !important; }
   #player-hand { height:58px !important; min-height:58px !important; }
   #player-hand .fan-card { width:44px !important; height:62px !important; margin-left:-4px !important; margin-right:-4px !important; }
   #turn-badge { display:none !important; }
@@ -359,11 +371,10 @@
   main > section > .flex.justify-between.items-center.w-full {
     flex:1 1 auto !important; min-height:0 !important; gap:3px !important; padding:0 2px !important; margin:1px 0 !important;
   }
-  #super-cards-container { min-height:22px !important; max-height:25px !important; max-width:24vw !important; padding:1px !important; gap:1px !important; overflow:hidden !important; }
-  #super-cards-container > div { width:20px !important; height:27px !important; }
-
-  #player-asset-stack { height:32px !important; max-height:32px !important; padding:1px !important; border-radius:6px !important; }
-  #player-asset-stack > div { height:10px !important; min-height:10px !important; padding:0 2px !important; font-size:5px !important; }
+  #player-asset-stack,
+  #super-cards-container { width:100% !important; height:32px !important; min-height:0 !important; max-height:32px !important; padding:1px !important; border-radius:6px !important; }
+  #player-asset-stack > div,
+  #super-cards-container > div { width:100% !important; height:10px !important; min-height:10px !important; padding:0 2px !important; font-size:5px !important; }
 
   main > section > .flex.justify-between.items-center.w-full > .flex.flex-col.items-center.bg-slate-950\/90 {
     width:30vw !important; max-width:30vw !important; padding:2px !important; border-radius:7px !important;
@@ -479,15 +490,20 @@
   }
   #super-cards-container {
     width:100% !important;
-    min-height:62px !important;
-    max-height:62px !important;
-    padding:4px !important;
-    gap:3px !important;
-    overflow:hidden !important;
-    border-radius:14px !important;
+    height:76px !important;
+    min-height:0 !important;
+    max-height:76px !important;
+    padding:3px !important;
+    border-radius:11px !important;
   }
-  #super-cards-container > div { width:40px !important; height:52px !important; flex-shrink:0 !important; }
-  #super-cards-container .text-\[10px\] { font-size:8px !important; }
+  #super-cards-container > div {
+    width:100% !important;
+    height:18px !important;
+    min-height:18px !important;
+    padding:0 5px !important;
+    font-size:7px !important;
+    flex-shrink:0 !important;
+  }
 
   /* Portefeuille central */
   main > section > .flex.justify-between.items-center.w-full > .flex.flex-col.items-center.bg-slate-950\/90 {
@@ -973,8 +989,8 @@ main > section > .flex.justify-between.items-center.w-full
             <div class="flex justify-between items-center w-full px-4 my-1">
                 <div class="flex flex-col">
                     <span class="text-[10px] uppercase font-bold text-amber-400 mb-1 tracking-wider drop-shadow">⭐ Boucliers Permanents Actifs</span>
-                    <div id="super-cards-container" class="flex space-x-2 min-h-[50px] items-center bg-slate-950/85 backdrop-blur p-2 rounded-2xl border border-amber-500/30 shadow-lg">
-                        <span class="text-[10px] text-slate-500 italic px-2">Aucun bouclier actif</span>
+                    <div id="super-cards-container" class="w-full h-24 flex flex-col items-center justify-start overflow-y-auto scrollbar-thin p-1 bg-slate-900/80 border border-slate-800 rounded-2xl">
+                        <span class="text-[10px] text-slate-500 italic my-auto text-center">Aucun bouclier actif</span>
                     </div>
                 </div>
 
@@ -1014,12 +1030,6 @@ main > section > .flex.justify-between.items-center.w-full
         </span>
     </div>
 
-    <!-- BOUTON PIOCHER -->
-    <button onclick="playerDrawCardManual()"
-            id="draw-btn"
-            class="px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl text-xs shadow transition">
-        Piocher 📥
-    </button>
 </div>
                 </div>
             </div>
@@ -1041,6 +1051,11 @@ main > section > .flex.justify-between.items-center.w-full
                     <!-- Carte d'attaque reçue : juste à gauche de la main -->
                     <div id="player-trap-slot" class="player-trap-card" style="display:none;"></div>
                     <div id="player-hand" class="card-container w-full"></div>
+                    <button onclick="playerDrawCardManual()"
+                            id="draw-btn"
+                            class="player-draw-button px-3.5 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl text-xs shadow transition">
+                        Piocher 📥
+                    </button>
                 </div>
             </div>
         </section>
@@ -1242,13 +1257,65 @@ main > section > .flex.justify-between.items-center.w-full
             });
         }
 
-        function generateDeck() {
-            let deck = [];
-            cardTemplates.forEach(template => {
-                for (let i = 0; i < template.count; i++) {
-                    deck.push({ ...template, uid: Math.random().toString(36).substr(2, 9) });
+        // Génère un paquet réellement aléatoire, mais avec une structure jouable.
+        // Le paquet conserve EXACTEMENT toutes les cartes prévues.
+        // La seule contrainte est appliquée au mélange :
+        // - jamais plus de 2 cartes de la même catégorie à la suite ;
+        // - au moins 1 actif sur chaque fenêtre de 5 cartes ;
+        // - les attaques et défenses restent réparties dans le paquet.
+        function shufflePlayableDeck(deck) {
+            const MAX_RESTARTS = 3000;
+
+            for (let attempt = 0; attempt < MAX_RESTARTS; attempt++) {
+                const remaining = [...deck];
+                const result = [];
+                let lastCategory = null;
+                let sameCategoryStreak = 0;
+                let nonAssetStreak = 0;
+
+                while (remaining.length > 0) {
+                    let candidates = remaining.filter(card => {
+                        const category = card.type === 'asset' || card.type === 'trap' || card.type === 'defense'
+                            ? card.type
+                            : null;
+
+                        if (category && category === lastCategory && sameCategoryStreak >= 2) return false;
+                        if (nonAssetStreak >= 4 && card.type !== 'asset') return false;
+                        return true;
+                    });
+
+                    // Si une contrainte crée exceptionnellement une impasse,
+                    // on recommence le mélange depuis zéro : aucune carte n'est supprimée.
+                    if (!candidates.length) break;
+
+                    const card = candidates[Math.floor(Math.random() * candidates.length)];
+                    const index = remaining.indexOf(card);
+                    remaining.splice(index, 1);
+                    result.push(card);
+
+                    const category = card.type === 'asset' || card.type === 'trap' || card.type === 'defense'
+                        ? card.type
+                        : null;
+
+                    if (category && category === lastCategory) {
+                        sameCategoryStreak++;
+                    } else if (category) {
+                        lastCategory = category;
+                        sameCategoryStreak = 1;
+                    } else {
+                        lastCategory = null;
+                        sameCategoryStreak = 0;
+                    }
+
+                    nonAssetStreak = card.type === 'asset' ? 0 : nonAssetStreak + 1;
                 }
-            });
+
+                if (result.length === deck.length) return result;
+            }
+
+            // Secours extrêmement improbable : simple Fisher-Yates.
+            // Le jeu reste fonctionnel même si une future modification des
+            // quantités de cartes rend les contraintes impossibles.
             for (let i = deck.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -1256,23 +1323,125 @@ main > section > .flex.justify-between.items-center.w-full
             return deck;
         }
 
-        // Pioche infinie : dès que la pioche est vide, on remet la défausse
-        // dans la pioche. Si les deux sont vides, on recrée automatiquement
-        // un nouveau paquet complet. Ainsi, il est impossible de tomber à court.
-        function ensureInfiniteDeck(state) {
-            if (state.deck.length > 0) return;
+        function generateDeck() {
+            let deck = [];
+            cardTemplates.forEach(template => {
+                for (let i = 0; i < template.count; i++) {
+                    deck.push(createCardInstance(template));
+                }
+            });
+            // La main de départ reste totalement aléatoire : aucun ratio
+            // et aucune contrainte de catégorie n'est appliqué ici.
+            return shuffleDeck(deck);
+        }
 
-            if (state.discardPile.length > 0) {
-                state.deck = [...state.discardPile];
-                state.discardPile = [];
-            } else {
-                state.deck = generateDeck();
-            }
+        function createCardInstance(template) {
+            return {
+                ...template,
+                uid: typeof crypto !== 'undefined' && crypto.randomUUID
+                    ? crypto.randomUUID()
+                    : Math.random().toString(36).slice(2, 11)
+            };
+        }
 
-            for (let i = state.deck.length - 1; i > 0; i--) {
+        function getSuperCardIds(cards) {
+            return cards.filter(card => card.type === 'super').map(card => card.id);
+        }
+
+        // PIOCHE INFINIE : aucun paquet virtuel ne s'épuise.
+        // Chaque tirage choisit directement une carte aléatoire parmi les
+        // modèles disponibles. Les actifs restent légèrement majoritaires
+        // (46 %) mais les attaques et défenses ont chacune ~27 %.
+        // Une sécurité intervient uniquement après une série anormalement
+        // longue pour éviter de rendre la partie injouable.
+        const ASSET_DRAW_WEIGHT_MULTIPLIER = 46 / 33;
+        const TRAP_DRAW_WEIGHT_MULTIPLIER = 27 / 21;
+        const DEFENSE_DRAW_WEIGHT_MULTIPLIER = 27 / 20;
+        const MAX_CONSECUTIVE_NON_ASSET_DRAWS = 7;
+        const MAX_CONSECUTIVE_WITHOUT_ATTACK = 8;
+        const MAX_CONSECUTIVE_WITHOUT_DEFENSE = 8;
+
+        function getDrawWeight(template) {
+            const multiplier =
+                template.type === 'asset' ? ASSET_DRAW_WEIGHT_MULTIPLIER :
+                template.type === 'trap' ? TRAP_DRAW_WEIGHT_MULTIPLIER :
+                template.type === 'defense' ? DEFENSE_DRAW_WEIGHT_MULTIPLIER :
+                1;
+            return template.count * multiplier;
+        }
+
+        function shuffleDeck(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [state.deck[i], state.deck[j]] = [state.deck[j], state.deck[i]];
+                [deck[i], deck[j]] = [deck[j], deck[i]];
             }
+            return deck;
+        }
+
+        function drawRandomCard(state, recipient) {
+            const claimedSuperCardIds = new Set(state.claimedSuperCardIds || []);
+
+            // IMPORTANT : la pioche est réellement infinie.
+            // On ne retire/recycle plus de cartes d'un paquet : chaque tirage
+            // est effectué directement à partir des modèles de cartes.
+            let drawPool = cardTemplates.filter(template =>
+                template.type !== 'super' || !claimedSuperCardIds.has(template.id)
+            );
+
+            const nonAssetStreak = recipient?.nonAssetDrawStreak || 0;
+            const nonAttackStreak = recipient?.nonAttackDrawStreak || 0;
+            const nonDefenseStreak = recipient?.nonDefenseDrawStreak || 0;
+
+            // Cas normal : tirage pondéré totalement aléatoire.
+            // Sécurité uniquement si une série devient anormalement longue.
+            if (recipient && nonAssetStreak >= MAX_CONSECUTIVE_NON_ASSET_DRAWS) {
+                drawPool = drawPool.filter(template => template.type === 'asset');
+            } else if (recipient && nonAttackStreak >= MAX_CONSECUTIVE_WITHOUT_ATTACK) {
+                drawPool = drawPool.filter(template => template.type === 'trap');
+            } else if (recipient && nonDefenseStreak >= MAX_CONSECUTIVE_WITHOUT_DEFENSE) {
+                drawPool = drawPool.filter(template => template.type === 'defense');
+            }
+
+            const totalWeight = drawPool.reduce((total, template) =>
+                total + getDrawWeight(template), 0
+            );
+            let roll = Math.random() * totalWeight;
+            let selectedTemplate = drawPool[drawPool.length - 1];
+
+            for (const template of drawPool) {
+                roll -= getDrawWeight(template);
+                if (roll <= 0) {
+                    selectedTemplate = template;
+                    break;
+                }
+            }
+
+            const card = createCardInstance(selectedTemplate);
+
+            if (card.type === 'super') {
+                state.claimedSuperCardIds = [...claimedSuperCardIds, card.id];
+            }
+
+            if (recipient) {
+                recipient.nonAssetDrawStreak = card.type === 'asset'
+                    ? 0
+                    : nonAssetStreak + 1;
+                recipient.nonAttackDrawStreak = card.type === 'trap'
+                    ? 0
+                    : nonAttackStreak + 1;
+                recipient.nonDefenseDrawStreak = card.type === 'defense'
+                    ? 0
+                    : nonDefenseStreak + 1;
+            }
+
+            return card;
+        }
+
+        // Compatibilité avec le reste du jeu : l'ancien système pouvait
+        // appeler cette fonction pour vider/reconstituer un paquet. Avec une
+        // pioche infinie directe, il n'y a rien à reconstituer.
+        function ensureInfiniteDeck(state) {
+            if (!state.deck) state.deck = [];
         }
 
         window.startSoloGame = function() {
@@ -1282,6 +1451,9 @@ main > section > .flex.justify-between.items-center.w-full
 
             document.getElementById('header-objective-tag').textContent = formatCurrency(TARGET_CAPITAL);
 
+            // MAIN DE DÉPART : totalement aléatoire.
+            // Les 5 premières cartes sont distribuées depuis le paquet mélangé,
+            // sans appliquer le ratio 46%-27%-27% ni aucune règle de forçage.
             const initialDeck = generateDeck();
             const pHand = [];
             for(let i=0; i<5; i++) {
@@ -1302,7 +1474,13 @@ main > section > .flex.justify-between.items-center.w-full
                     assets: [],
                     hand: aiHand,
                     superCards: [],
-                    activeTrap: null
+                    activeTrap: null,
+                    nonAssetDrawStreak: 0,
+                    nonTrapDrawStreak: 0,
+                    nonAttackDrawStreak: 0,
+                    nonDefenseDrawStreak: 0,
+                    lastDrawCategory: null,
+                    sameCategoryDrawStreak: 0
                 });
             }
 
@@ -1311,6 +1489,7 @@ main > section > .flex.justify-between.items-center.w-full
                 roundNumber: 1,
                 deck: initialDeck,
                 discardPile: [],
+                claimedSuperCardIds: getSuperCardIds([pHand, ...aiPlayers.flatMap(ai => ai.hand)]),
                 player: {
                     name: name,
                     capital: 0,
@@ -1318,6 +1497,12 @@ main > section > .flex.justify-between.items-center.w-full
                     hand: pHand,
                     superCards: [],
                     activeTrap: null,
+                    nonAssetDrawStreak: 0,
+                    nonTrapDrawStreak: 0,
+                    nonAttackDrawStreak: 0,
+                    nonDefenseDrawStreak: 0,
+                    lastDrawCategory: null,
+                    sameCategoryDrawStreak: 0,
                     hasDrawnThisTurn: false
                 },
                 ais: aiPlayers
@@ -1410,19 +1595,7 @@ main > section > .flex.justify-between.items-center.w-full
 
             renderAssetStack('player-asset-stack', me.assets);
 
-            const superContainer = document.getElementById('super-cards-container');
-            if (me.superCards && me.superCards.length > 0) {
-                superContainer.innerHTML = '';
-                me.superCards.forEach(sc => {
-                    const el = document.createElement('div');
-                    el.className = "w-10 h-14 bg-gradient-to-br from-amber-600 to-amber-950 border border-amber-300 rounded-xl flex flex-col items-center justify-center text-white shadow-lg p-0.5";
-                    el.title = `${sc.name} (Bouclier Permanent Actif)`;
-                    el.innerHTML = `<span class="text-sm">${sc.icon}</span><span class="text-[6px] font-bold text-amber-100 text-center leading-tight">Actif</span>`;
-                    superContainer.appendChild(el);
-                });
-            } else {
-                superContainer.innerHTML = '<span class="text-[10px] text-slate-500 italic px-2">Aucun bouclier actif</span>';
-            }
+            renderSuperCardStack('super-cards-container', me.superCards);
 
             renderHand(me.hand, isMyTurn && me.hasDrawnThisTurn && pendingAttackCard === null);
 
@@ -1445,9 +1618,7 @@ main > section > .flex.justify-between.items-center.w-full
                 const me = soloState.player;
                 if (me.hasDrawnThisTurn) return;
 
-                // Pioche toujours disponible, même après épuisement de la défausse.
-                ensureInfiniteDeck(soloState);
-                me.hand.push(soloState.deck.pop());
+                me.hand.push(drawRandomCard(soloState, me));
                 me.hasDrawnThisTurn = true;
                 renderSoloState();
             } else {
@@ -1560,9 +1731,8 @@ main > section > .flex.justify-between.items-center.w-full
             const ai = soloState.ais[aiIdx];
             const me = soloState.player;
 
-            // L'IA bénéficie elle aussi de la pioche infinie.
-            ensureInfiniteDeck(soloState);
-            ai.hand.push(soloState.deck.pop());
+            // L'IA utilise exactement la même pioche aléatoire que le joueur.
+            ai.hand.push(drawRandomCard(soloState, ai));
 
             if (ai.hand.length > 0) {
                 const assetIdx = ai.hand.findIndex(c => c.type === 'asset');
@@ -1711,6 +1881,24 @@ main > section > .flex.justify-between.items-center.w-full
             }
         }
 
+        function renderSuperCardStack(containerId, superCards) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (superCards && superCards.length > 0) {
+                container.innerHTML = '';
+                superCards.forEach(sc => {
+                    const div = document.createElement('div');
+                    div.className = `w-full h-7 bg-gradient-to-r ${sc.color || SHADE_SUPER} border rounded-lg flex items-center justify-between px-2.5 text-[11px] font-bold text-white shadow stacked-card my-0.5 flex-shrink-0`;
+                    div.title = `${sc.name} (Bouclier Permanent Actif)`;
+                    div.innerHTML = `<span class="min-w-0 truncate">${sc.icon} ${sc.name}</span><span class="ml-2 flex-shrink-0 font-mono text-amber-100">Actif</span>`;
+                    container.appendChild(div);
+                });
+            } else {
+                container.innerHTML = '<span class="text-[10px] text-slate-500 italic my-auto text-center">Aucun bouclier actif</span>';
+            }
+        }
+
         function renderHand(handList, canPlay) {
             const handContainer = document.getElementById('player-hand');
             handContainer.innerHTML = '';
@@ -1783,6 +1971,9 @@ main > section > .flex.justify-between.items-center.w-full
                 : 'host_' + Math.random().toString(36).substring(2, 10);
 
         // Création du paquet
+        // MAIN DE DÉPART : totalement aléatoire.
+        // Les 5 premières cartes sont distribuées depuis le paquet mélangé,
+        // sans appliquer le ratio 46%-27%-27% ni aucune règle de forçage.
         const initialDeck = generateDeck();
         const p1Hand = [];
 
@@ -1801,6 +1992,7 @@ main > section > .flex.justify-between.items-center.w-full
             playerOrder: [myUid],
             deck: initialDeck,
             discardPile: [],
+            claimedSuperCardIds: getSuperCardIds(p1Hand),
             turnIndex: 0,
             roundNumber: 1,
 
@@ -1813,6 +2005,12 @@ main > section > .flex.justify-between.items-center.w-full
                     hand: p1Hand,
                     superCards: [],
                     activeTrap: null,
+                    nonAssetDrawStreak: 0,
+                    nonTrapDrawStreak: 0,
+                    nonAttackDrawStreak: 0,
+                    nonDefenseDrawStreak: 0,
+                    lastDrawCategory: null,
+                    sameCategoryDrawStreak: 0,
                     hasDrawnThisTurn: false
                 }
             }
@@ -1917,6 +2115,10 @@ main > section > .flex.justify-between.items-center.w-full
                 for(let i=0; i<5; i++) {
                     if(data.deck.length > 0) pHand.push(data.deck.pop());
                 }
+                data.claimedSuperCardIds = Array.from(new Set([
+                    ...(data.claimedSuperCardIds || []),
+                    ...getSuperCardIds(pHand)
+                ]));
 
                 data.players[myUid] = {
                     uid: myUid,
@@ -1926,6 +2128,12 @@ main > section > .flex.justify-between.items-center.w-full
                     hand: pHand,
                     superCards: [],
                     activeTrap: null,
+                    nonAssetDrawStreak: 0,
+                    nonTrapDrawStreak: 0,
+                    nonAttackDrawStreak: 0,
+                    nonDefenseDrawStreak: 0,
+                    lastDrawCategory: null,
+                    sameCategoryDrawStreak: 0,
                     hasDrawnThisTurn: false
                 };
                 if (!data.playerOrder.includes(myUid)) {
@@ -2069,18 +2277,7 @@ main > section > .flex.justify-between.items-center.w-full
 
             renderAssetStack('player-asset-stack', me.assets);
 
-            const superContainer = document.getElementById('super-cards-container');
-            if (me.superCards && me.superCards.length > 0) {
-                superContainer.innerHTML = '';
-                me.superCards.forEach(sc => {
-                    const el = document.createElement('div');
-                    el.className = "w-10 h-14 bg-gradient-to-br from-amber-600 to-amber-950 border border-amber-300 rounded-xl flex flex-col items-center justify-center text-white shadow-lg p-0.5";
-                    el.innerHTML = `<span class="text-sm">${sc.icon}</span><span class="text-[6px] font-bold text-amber-100 text-center leading-tight">Actif</span>`;
-                    superContainer.appendChild(el);
-                });
-            } else {
-                superContainer.innerHTML = '<span class="text-[10px] text-slate-500 italic px-2">Aucun bouclier actif</span>';
-            }
+            renderSuperCardStack('super-cards-container', me.superCards);
 
             renderHand(me.hand, isMyTurn && me.hasDrawnThisTurn && pendingAttackCard === null);
 
@@ -2105,15 +2302,14 @@ main > section > .flex.justify-between.items-center.w-full
             const me = currentRoomState.players[myUid];
             if (me.hasDrawnThisTurn) return;
 
-            // Pioche infinie en multijoueur également.
-            ensureInfiniteDeck(currentRoomState);
-            me.hand.push(currentRoomState.deck.pop());
+            me.hand.push(drawRandomCard(currentRoomState, me));
             me.hasDrawnThisTurn = true;
 
             const roomRef = doc(db, 'artifacts', appId, 'rooms', currentRoomCode);
             await updateDoc(roomRef, {
                 deck: currentRoomState.deck,
                 discardPile: currentRoomState.discardPile,
+                claimedSuperCardIds: currentRoomState.claimedSuperCardIds,
                 players: currentRoomState.players
             });
         }
@@ -2322,5 +2518,27 @@ main > section > .flex.justify-between.items-center.w-full
 /* Supprime complètement l'élément PIOCHE visible */
 .mobile-deck-actions #deck-draw-click {
     display: none !important;
+}
+
+/* Le bouton de pioche accompagne désormais la main, en bas à droite. */
+#draw-btn.player-draw-button {
+    position: relative !important;
+    top: 0 !important;
+    right: auto !important;
+    flex: 0 0 auto !important;
+    margin: 0 0 0 10px !important;
+    z-index: 30 !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 900px) {
+    #draw-btn.player-draw-button {
+        min-height: 26px !important;
+        height: 26px !important;
+        padding: 3px 6px !important;
+        font-size: 7px !important;
+        border-radius: 7px !important;
+        margin-left: 5px !important;
+    }
 }
 </style>
