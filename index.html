@@ -2497,6 +2497,21 @@ main > section > .flex.justify-between.items-center.w-full
 }
 </style>
 
+
+<style>
+/* POSITION MOBILE — BOUTON PIOCHER */
+@media (max-width: 900px) {
+    #draw-btn.player-draw-button {
+        position: relative !important;
+        left: -45px !important;
+        right: auto !important;
+        transform: scale(1.08) !important;
+        margin-left: 0 !important;
+        z-index: 50 !important;
+    }
+}
+</style>
+
 </body>
 </html>
 
@@ -2533,18 +2548,7 @@ main > section > .flex.justify-between.items-center.w-full
     transform-origin: center center !important;
 }
 
-@media (max-width: 900px) {
-    #draw-btn.player-draw-button {
-        min-height: 29px !important;
-        height: 29px !important;
-        padding: 4px 8px !important;
-        font-size: 8px !important;
-        border-radius: 7px !important;
-        margin-left: 2px !important;
-        transform: translateX(-14px) scale(1.08) !important;
-        transform-origin: center center !important;
-    }
-}
+
 </style>
 
 <style>
