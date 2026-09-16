@@ -2290,6 +2290,17 @@ main > section > .flex.justify-between.items-center.w-full
             location.reload();
         }
     </script>
+
+<style>
+/* Décaler PIOCHE + POUBELLE vers la gauche */
+@media (orientation: landscape) and (max-height: 650px) {
+    .mobile-deck-actions {
+        position: relative !important;
+        left: -45px !important;
+    }
+}
+</style>
+
 </body>
 </html>
 
