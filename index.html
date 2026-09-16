@@ -1345,7 +1345,6 @@ main > section > .flex.justify-between.items-center.w-full
             const badge = document.getElementById('turn-badge');
             const drawBtn = document.getElementById('draw-btn');
             const deckClick = document.getElementById('deck-draw-click');
-            const discardTurnBtn = document.getElementById('discard-turn-btn');
 
             if (isMyTurn) {
                 if (!me.hasDrawnThisTurn) {
@@ -1353,19 +1352,16 @@ main > section > .flex.justify-between.items-center.w-full
                     badge.className = "px-4 py-1.5 bg-amber-500/20 border border-amber-500 text-amber-300 font-bold text-xs rounded-full animate-glow text-center mb-1";
                     drawBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                     deckClick.classList.remove('opacity-50');
-                    discardTurnBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 } else if (pendingAttackCard) {
                     badge.textContent = "Ciblez un adversaire (clignotement rouge ci-dessus) !";
                     badge.className = "px-4 py-1.5 bg-red-500/20 border border-red-500 text-red-300 font-bold text-xs rounded-full animate-glow text-center mb-1";
                     drawBtn.classList.add('opacity-50', 'cursor-not-allowed');
                     deckClick.classList.add('opacity-50');
-                    discardTurnBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 } else {
                     badge.textContent = "À votre tour : Jouez une carte ou défaussez";
                     badge.className = "px-4 py-1.5 bg-emerald-500/20 border border-emerald-500 text-emerald-300 font-bold text-xs rounded-full animate-glow text-center mb-1";
                     drawBtn.classList.add('opacity-50', 'cursor-not-allowed');
                     deckClick.classList.add('opacity-50');
-                    discardTurnBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                 }
             } else {
                 const currentAi = ais[state.turnIndex - 1];
@@ -1373,7 +1369,6 @@ main > section > .flex.justify-between.items-center.w-full
                 badge.className = "px-4 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 font-bold text-xs rounded-full text-center mb-1";
                 drawBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 deckClick.classList.add('opacity-50');
-                discardTurnBtn.classList.add('opacity-50', 'cursor-not-allowed');
             }
 
             const pTrapSlot = document.getElementById('player-trap-slot');
@@ -2003,7 +1998,6 @@ main > section > .flex.justify-between.items-center.w-full
             const badge = document.getElementById('turn-badge');
             const drawBtn = document.getElementById('draw-btn');
             const deckClick = document.getElementById('deck-draw-click');
-            const discardTurnBtn = document.getElementById('discard-turn-btn');
 
             if (isMyTurn) {
                 if (!me.hasDrawnThisTurn) {
@@ -2011,26 +2005,22 @@ main > section > .flex.justify-between.items-center.w-full
                     badge.className = "px-4 py-1.5 bg-amber-500/20 border border-amber-500 text-amber-300 font-bold text-xs rounded-full animate-glow text-center mb-1";
                     drawBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                     deckClick.classList.remove('opacity-50');
-                    discardTurnBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 } else if (pendingAttackCard) {
                     badge.textContent = "Ciblez un adversaire (clignotement rouge ci-dessus) !";
                     badge.className = "px-4 py-1.5 bg-red-500/20 border border-red-500 text-red-300 font-bold text-xs rounded-full animate-glow text-center mb-1";
                     drawBtn.classList.add('opacity-50', 'cursor-not-allowed');
                     deckClick.classList.add('opacity-50');
-                    discardTurnBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 } else {
                     badge.textContent = "À votre tour : Jouez une carte ou défaussez";
                     badge.className = "px-4 py-1.5 bg-emerald-500/20 border border-emerald-500 text-emerald-300 font-bold text-xs rounded-full animate-glow text-center mb-1";
                     drawBtn.classList.add('opacity-50', 'cursor-not-allowed');
                     deckClick.classList.add('opacity-50');
-                    discardTurnBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                 }
             } else {
                 badge.textContent = `Tour de ${activePlayerObj ? activePlayerObj.name : 'un autre joueur'}...`;
                 badge.className = "px-4 py-1.5 bg-slate-900 border border-slate-800 text-slate-400 font-bold text-xs rounded-full text-center mb-1";
                 drawBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 deckClick.classList.add('opacity-50');
-                discardTurnBtn.classList.add('opacity-50', 'cursor-not-allowed');
             }
 
             const pTrapSlot = document.getElementById('player-trap-slot');
