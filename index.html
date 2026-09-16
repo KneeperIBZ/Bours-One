@@ -2569,11 +2569,20 @@ main > section > .flex.justify-between.items-center.w-full
 @media (orientation: landscape) and (max-height: 650px) {
     #draw-btn.player-draw-button {
         position: relative !important;
-        left: -110px !important;
+        left: -75px !important;
         right: auto !important;
         margin-left: 0 !important;
         transform: none !important;
         z-index: 9999 !important;
     }
+}
+</style>
+
+<style id="piocher-encadrement-final">
+/* Encadrement du bouton Piocher : même bordure que les autres éléments */
+#draw-btn.player-draw-button {
+    border: 1px solid #1e293b !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
 }
 </style>
