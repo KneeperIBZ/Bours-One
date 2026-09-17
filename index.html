@@ -1500,14 +1500,43 @@ button, input, select, textarea, a, [role="button"] {
                     return currentUser;
                 };
 
-                // Promesse globale : le bouton "Créer Salon" attendra
-                // que Firebase et l'authentification soient réellement prêts.
-                window.boursOneFirebaseReady = initAuth().catch((error) => {
-                    console.error("Firebase Auth error:", error);
-                    const status = document.getElementById('auth-status');
-                    if (status) status.textContent = "Connexion Firebase impossible";
-                    throw error;
-                });
+// Firebase doit être complètement connecté avant de pouvoir créer un salon.
+window.boursOneFirebaseReady = initAuth()
+    .then((user) => {
+        console.log("✅ Firebase prêt pour Bours'One");
+        console.log("UID :", user?.uid);
+
+        const status = document.getElementById('auth-status');
+
+        if (status) {
+            status.textContent =
+                "Firebase connecté ✓";
+        }
+
+        return user;
+    })
+    .catch((error) => {
+
+        console.error("❌ ERREUR FIREBASE :", error);
+
+        const status = document.getElementById('auth-status');
+
+        if (status) {
+            status.textContent =
+                "ERREUR FIREBASE : " +
+                (error.code || "inconnue");
+        }
+
+        alert(
+            "PROBLÈME DE CONNEXION FIREBASE\n\n" +
+            "Code : " +
+            (error.code || "inconnu") +
+            "\n\nMessage : " +
+            (error.message || "Aucun message")
+        );
+
+        throw error;
+    });
             } else {
                 document.getElementById('auth-status').textContent = "Mode Local & Solo actif ✓";
             }
